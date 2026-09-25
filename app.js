@@ -86,11 +86,12 @@ function renderHero(items){
  '<div class="story-meta">'+esc(x.content_type||"NEWS")+" · "+esc(date(x.published_at))+"</div>"+
  '<h1>'+esc(x.title||"Latest story")+"</h1>"+
  '<p>'+esc(x.excerpt||x.meta_description||"The latest story from Naija Newspaper.")+"</p>"+
- '<a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read full story →</a>";
+ '<a class="read-link" href="'+storyUrl(x)+'">Read full story →</a>";
 }
+function storyUrl(x){ return "./story/"+encodeURIComponent(String(x.slug||x.id||"")).replace(/%2F/g,"/")+"/"; }
 function storyCard(x){
  return '<article class="news-card">'+storyImage(x,"story-img")+
- '<div class="story-body"><div class="story-meta">'+esc(x.content_type||"NEWS")+" · "+esc(date(x.published_at))+"</div><h3>"+esc(x.title||"Untitled story")+"</h3><p>"+esc(x.excerpt||x.meta_description||"Read the latest story from Naija Newspaper.")+'</p><a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read story →</a></div></article>';
+ '<div class="story-body"><div class="story-meta">'+esc(x.content_type||"NEWS")+" · "+esc(date(x.published_at))+"</div><h3>"+esc(x.title||"Untitled story")+"</h3><p>"+esc(x.excerpt||x.meta_description||"Read the latest story from Naija Newspaper.")+'</p><a class="read-link" href="'+storyUrl(x)+'">Read story →</a></div></article>';
 }
 
 function renderBusinessLegends(){
@@ -105,7 +106,7 @@ function renderBusinessLegends(){
 function newspaperWidget(items){
   if(!items.length) return '<div class="empty">No published stories yet.</div>';
   const lead=items[0], rest=items.slice(1,5);
-  return '<div class="paper-lead">'+storyCard(lead)+'</div><div class="paper-list">'+rest.map((x,i)=>'<article class="paper-list-item"><span class="paper-number">'+String(i+1).padStart(2,'0')+'</span><div><div class="story-meta">'+esc(categoryName(x.category_id))+'</div><h3><a href="#story/'+encodeURIComponent(x.slug||x.id)+'">'+esc(x.title||'Untitled story')+'</a></h3><p>'+esc(x.excerpt||'')+'</p></div></article>').join('')+'</div>';
+  return '<div class="paper-lead">'+storyCard(lead)+'</div><div class="paper-list">'+rest.map((x,i)=>'<article class="paper-list-item"><span class="paper-number">'+String(i+1).padStart(2,'0')+'</span><div><div class="story-meta">'+esc(categoryName(x.category_id))+'</div><h3><a href="'+storyUrl(x)+'">'+esc(x.title||'Untitled story')+'</a></h3><p>'+esc(x.excerpt||'')+'</p></div></article>').join('')+'</div>';
 }
 function categoryName(id){const m={"b3f90d03-c7be-4cf4-8677-9a961bdd2d1e":"NEWS","f08e1fe3-76c6-47d9-9dd1-bd062b5ae326":"ENTERTAINMENT","46b002f0-2b86-4f33-9d64-988ad980cba9":"MUSIC","f73902ba-76f3-49f1-89d5-3ac128827c9b":"BUSINESS","89c05491-2c32-4461-97c2-fcd85eaea124":"SPORTS","8fef5a18-8d61-4c84-970e-58acca7d7ac3":"TECHNOLOGY","f4b7cd65-3f7e-42f6-99be-689454d80fbe":"CULTURE","a8e72a7d-6bb2-49ba-ae43-04079fbd4995":"INTERVIEWS","3b9661dd-5532-4eab-90f4-b90b4e768935":"EVENTS"};return m[id]||"STORIES";}
 const CATEGORY_IDS={
@@ -234,7 +235,7 @@ async function showPerson(slug){
   $("#profile").innerHTML='<div class="wiki-profile"><div class="wiki-main"><div class="profile-breadcrumb">PEOPLE / '+esc(x.person_type||"PROFILE")+' / '+esc(x.category||"REFERENCE")+'</div><h1 class="profile-name">'+esc(x.display_name)+'</h1><div class="profile-rule"></div><p class="profile-headline">'+esc(x.headline||"Public figure profile")+'</p>'+(x.is_verified?'<span class="verified large">✓ Verified by Naija Newspaper</span>':"")+
   '<section class="profile-section"><h2>Biography</h2><div class="bio">'+contentHtml(x.bio||x.short_bio||"This profile is being developed.")+'</div></section>'+
   '<section class="profile-section"><h2>Career and work</h2><p>Naija Newspaper maintains this reference profile to document publicly available information, career milestones, notable work and published coverage.</p></section>'+
-  (stories.length?'<section class="profile-section"><h2>Naija Newspaper coverage</h2><div class="profile-story-list">'+stories.map(s=>'<a href="#story/'+encodeURIComponent(s.slug||s.id)+'"><span class="story-meta">'+esc(s.content_type||"STORY")+' · '+esc(date(s.published_at))+'</span><strong>'+esc(s.title)+'</strong></a>').join("")+'</div></section>':"")+
+  (stories.length?'<section class="profile-section"><h2>Naija Newspaper coverage</h2><div class="profile-story-list">'+stories.map(s=>'<a href="'+storyUrl(s)+'"><span class="story-meta">'+esc(s.content_type||"STORY")+' · '+esc(date(s.published_at))+'</span><strong>'+esc(s.title)+'</strong></a>').join("")+'</div></section>':"")+
   '<section class="profile-section"><h2>Official links</h2><div class="link-grid">'+linksHtml+'</div></section>'+
   '<section class="profile-section"><h2>References and updates</h2><p>This is an editorial reference page, not a Wikipedia page and not a platform verification badge. Information is maintained through the Naija Newspaper editorial desk.</p><p><a class="read-link" href="#claim">Claim or request an update →</a></p></section></div>'+
   '<aside class="wiki-infobox"><div class="infobox-title">'+esc(x.display_name)+'</div><div class="infobox-photo">'+(x.profile_image_url?'<img src="'+esc(x.profile_image_url)+'" alt="'+esc(x.display_name)+'">':'<div class="person-placeholder large">NN</div>')+'</div><div class="infobox-caption">'+esc(x.headline||x.category||"People profile")+'</div><dl>'+facts.map(v=>'<div><dt>'+esc(v[0])+'</dt><dd>'+esc(v[1])+'</dd></div>').join("")+'</dl>'+(sameAsLinks?'<div class="infobox-links"><strong>External profiles</strong>'+sameAsLinks+'</div>':"")+'</aside></div>';
