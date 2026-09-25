@@ -171,7 +171,7 @@ async function loadLiveNews(){
    const data=await r.json();
    return (data.items||[]).slice(0,5).map(item=>({...item,source:source.name}));
   }));
-  const items=results.flat().sort((a,b)=>new Date(b.pubDate||0)-new Date(a.pubDate||0)).slice(0,30);
+  const items=results.flat().sort((a,b)=>new Date(b.pubDate||0)-new Date(a.pubDate||0)).slice(0,30); // live-feed cache refresh
   if(!items.length) throw new Error("No live headlines");
   grid.innerHTML=items.map(item=>'<article class="live-news-card"><div class="live-source">'+esc(item.source)+'</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleString("en-NG",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"Latest")+'</div></article>').join("");
   status.textContent="Updated "+new Date().toLocaleTimeString("en-NG",{hour:"2-digit",minute:"2-digit"});
