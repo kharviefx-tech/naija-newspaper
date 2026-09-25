@@ -69,10 +69,10 @@ function renderPosts(items){
   $("#allNewsGrid").innerHTML=html;
   const celebrity=items.filter(x=>String(x.category_id||"")==="f08e1fe3-76c6-47d9-9dd1-bd062b5ae326").slice(0,100);
   $("#celebrityGrid").innerHTML=celebrity.map(storyCard).join("")||'<div class="empty">No celebrity profiles yet.</div>';
-  $("#latestWidget").innerHTML=newspaperWidget(items.slice(0,5));
-  $("#topWidget").innerHTML=newspaperWidget(items.slice(5,10).length?items.slice(5,10):items.slice(0,5));
+  if($("#latestWidget")) $("#latestWidget").innerHTML=newspaperWidget(items.slice(0,5));
+  if($("#topWidget")) $("#topWidget").innerHTML=newspaperWidget(items.slice(5,10).length?items.slice(5,10):items.slice(0,5));
   const ids={business:"f73902ba-76f3-49f1-89d5-3ac128827c9b",sports:"89c05491-2c32-4461-97c2-fcd85eaea124",technology:"8fef5a18-8d61-4c84-970e-58acca7d7ac3",culture:"f4b7cd65-3f7e-42f6-99be-689454d80fbe",interviews:"a8e72a7d-6bb2-49ba-ae43-04079fbd4995",events:"3b9661dd-5532-4eab-90f4-b90b4e768935"};
-  Object.entries(ids).forEach(([name,id])=>{$("#"+name+"Widget").innerHTML=newspaperWidget(items.filter(x=>String(x.category_id||"")===id).slice(0,5));});
+  Object.entries(ids).forEach(([name,id])=>{const el=$("#"+name+"Widget");if(el)el.innerHTML=newspaperWidget(items.filter(x=>String(x.category_id||"")===id).slice(0,5));});
 }
 function personCard(x){
   return '<a class="person-card" href="#person/'+encodeURIComponent(x.slug)+'"><div class="person-photo">'+(x.profile_image_url?'<img src="'+esc(x.profile_image_url)+'" alt="'+esc(x.display_name)+'" loading="lazy">':'<div class="person-placeholder">NN</div>')+'</div><div class="person-card-body"><div class="story-meta">PEOPLE · '+esc(x.person_type||"PROFILE")+'</div><h3>'+esc(x.display_name)+'</h3><p>'+esc(x.headline||x.category||"Public profile")+'</p>'+(x.is_verified?'<span class="verified">✓ Verified by Naija Newspaper</span>':"")+'<span class="profile-arrow">View profile →</span></div></a>';
@@ -150,7 +150,7 @@ function route(){
   $("#profile").classList.add("hidden");
   if(!h||h==="#home") setMeta("Naija Newspaper — Business Legends, News, People & Stories","Naija Newspaper is an independent Nigerian digital publication led by Business Legends, business leaders, entrepreneurs, people and major stories.","https://kharviefx-tech.github.io/naija-newspaper/","NewsMediaOrganization",{name:"Naija Newspaper",url:"https://kharviefx-tech.github.io/naija-newspaper/"});
 }
-$("#peopleSearch").addEventListener("input",filterPeople);
+const peopleSearchEl=$("#peopleSearch"); if(peopleSearchEl) peopleSearchEl.addEventListener("input",filterPeople);
 // Mobile menu controls are initialized safely after the page is parsed.
 const menuButton=document.getElementById("menuBtn"), closeMenuButton=document.getElementById("closeMenu"), drawerBackdrop=document.getElementById("drawerBackdrop");
 if(menuButton) menuButton.addEventListener("click",()=>setMenu(true));
@@ -158,7 +158,7 @@ if(closeMenuButton) closeMenuButton.addEventListener("click",()=>setMenu(false))
 if(drawerBackdrop) drawerBackdrop.addEventListener("click",()=>setMenu(false));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
 
-$("#peopleType").addEventListener("change",filterPeople);
+const peopleTypeEl=$("#peopleType"); if(peopleTypeEl) peopleTypeEl.addEventListener("change",filterPeople);
 function setMenu(open){$("#menuDrawer").classList.toggle("open",open);$("#drawerBackdrop").classList.toggle("open",open);$("#menuDrawer").setAttribute("aria-hidden",String(!open));$("#drawerBackdrop").setAttribute("aria-hidden",String(!open));$("#menuBtn").setAttribute("aria-expanded",String(open));document.body.classList.toggle("drawer-open",open)}
 document.querySelectorAll("#menuDrawer a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
 $("#searchBtn").addEventListener("click",()=>$("#searchPanel").classList.add("open"));
@@ -171,7 +171,7 @@ const PUNCH_FEEDS=[
 "latest_news","featured","videos","metro_plus","columns","opinion","politics","business","health","incase_you_missed_it","interview","sports","interactive","special_feature","entertainment","education","technology","editorial","panorama","sex_and_relationship","healthwise"
 ];
 async function loadPunchNews(){
- const grid=$("#punchGrid"),status=$("#punchStatus");
+ const grid=$("#punchGrid"),status=$("#punchStatus"); if(!grid||!status)return;
  try{
   const results=await Promise.all(PUNCH_FEEDS.map(async category=>{
    const url="https://rss.punchng.com/v1/category/"+category;
