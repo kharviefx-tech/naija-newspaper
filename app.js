@@ -138,7 +138,11 @@ async function submitClaim(e){
 }
 $("#peopleSearch").addEventListener("input",filterPeople);
 $("#peopleType").addEventListener("change",filterPeople);
-$("#menuBtn").addEventListener("click",()=>$("#mainNav").classList.toggle("open"));
+function setMenu(open){$("#menuDrawer").classList.toggle("open",open);$("#drawerBackdrop").classList.toggle("open",open);$("#menuDrawer").setAttribute("aria-hidden",String(!open));$("#drawerBackdrop").setAttribute("aria-hidden",String(!open));$("#menuBtn").setAttribute("aria-expanded",String(open));document.body.classList.toggle("drawer-open",open)}
+$("#menuBtn").addEventListener("click",()=>setMenu(true));
+$("#closeMenu").addEventListener("click",()=>setMenu(false));
+$("#drawerBackdrop").addEventListener("click",()=>setMenu(false));
+document.querySelectorAll("#menuDrawer a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
 $("#searchBtn").addEventListener("click",()=>$("#searchPanel").classList.add("open"));
 $("#closeSearch").addEventListener("click",()=>$("#searchPanel").classList.remove("open"));
 $("#globalSearch").addEventListener("input",e=>{const q=e.target.value.toLowerCase().trim();const out=[...posts.map(x=>({type:"story",item:x})),...people.map(x=>({type:"person",item:x}))].filter(v=>{const x=v.item;return [x.title,x.display_name,x.headline,x.category,x.person_type].join(" ").toLowerCase().includes(q)}).slice(0,10).map(v=>v.type==="story"?'<div class="result"><div class="story-meta">STORY · '+esc(date(v.item.published_at))+'</div><h3>'+esc(v.item.title)+'</h3><a class="read-link" href="#story/'+encodeURIComponent(v.item.slug||v.item.id)+'">Open →</a></div>':'<div class="result"><div class="story-meta">PEOPLE PROFILE</div><h3>'+esc(v.item.display_name)+'</h3><a class="read-link" href="#person/'+encodeURIComponent(v.item.slug)+'">Open →</a></div>').join("");$("#searchResults").innerHTML=q?out||'<div class="empty">No matching results.</div>':""});
@@ -147,4 +151,31 @@ $("#claimForm").addEventListener("submit",submitClaim);
 window.addEventListener("hashchange",route);
 $("#dateLine").textContent=new Date().toLocaleDateString("en-NG",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 $("#year").textContent=new Date().getFullYear();
-load();
+const LIVE_FEEDS=[
+{name:"PUNCH",url:"https://rss.punchng.com/v1/category/latest_news"},
+{name:"Premium Times",url:"https://www.premiumtimesng.com/feed"},
+{name:"The Guardian Nigeria",url:"https://guardian.ng/feed/"},
+{name:"The Nation",url:"https://thenationonlineng.net/feed/"},
+{name:"Daily Post Nigeria",url:"https://dailypost.ng/feed"},
+{name:"Legit.ng",url:"https://www.legit.ng/rss/all.rss"},
+{name:"BBC News",url:"https://feeds.bbci.co.uk/news/world/africa/rss.xml"}];
+async function loadLiveNews(){
+ const grid=$("#liveNewsGrid"),status=$("#liveNewsStatus");
+ try{
+  const results=await Promise.all(LIVE_FEEDS.map(async source=>{
+   const r=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(source.url),{cache:"no-store"});
+   if(!r.ok) throw new Error(source.name);
+   const data=await r.json();
+   return (data.items||[]).slice(0,5).map(item=>({...item,source:source.name}));
+  }));
+  const items=results.flat().sort((a,b)=>new Date(b.pubDate||0)-new Date(a.pubDate||0)).slice(0,30);
+  if(!items.length) throw new Error("No live headlines");
+  grid.innerHTML=items.map(item=>'<article class="live-news-card"><div class="live-source">'+esc(item.source)+'</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleString("en-NG",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"Latest")+'</div></article>').join("");
+  status.textContent="Updated "+new Date().toLocaleTimeString("en-NG",{hour:"2-digit",minute:"2-digit"});
+ }catch(e){
+  console.warn("Live news feeds unavailable",e);
+  grid.innerHTML='<div class="empty">Live feeds are temporarily unavailable. Published Naija Newspaper stories remain available above.</div>';
+  status.textContent="Feed unavailable";
+ }}
+loadLiveNews();
+setInterval(loadLiveNews,10*60*1000);
