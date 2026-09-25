@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Naija Newspaper — Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div id="loginView" class="auth-wrap">
+  <div class="auth-card">
+    <div class="eyebrow">NAIJA NEWSPAPER</div><h1>Admin Desk</h1>
+    <p>Sign in to publish stories, manage people, review claims and control advertising.</p>
+    <form id="loginForm">
+      <label>Email<input name="email" type="email" required autocomplete="username"></label>
+      <label>Password<input name="password" type="password" required autocomplete="current-password"></label>
+      <button class="primary" type="submit">Sign in</button>
+      <div id="loginMsg" class="msg"></div>
+    </form>
+  </div>
+</div>
+<div id="adminView" class="hidden">
+<header class="admin-head"><div><div class="eyebrow">NAIJA NEWSPAPER</div><strong>EDITORIAL CONTROL ROOM</strong></div><div class="head-actions"><a href="./" target="_blank">View site ↗</a><button id="logoutBtn">Sign out</button></div></header>
+<div class="admin-shell">
+<aside class="sidebar">
+<button data-tab="overview" class="tab active">Overview</button>
+<button data-tab="stories" class="tab">Stories</button>
+<button data-tab="people" class="tab">People</button>
+<button data-tab="submissions" class="tab">Submissions</button>
+<button data-tab="claims" class="tab">Claims</button>
+<button data-tab="ads" class="tab">Advertising</button>
+<button data-tab="media" class="tab">Media</button>
+<button data-tab="settings" class="tab">Settings</button>
+</aside>
+<main class="workspace">
+<section id="overview" class="panel active"><div class="panel-head"><div><div class="eyebrow">DASHBOARD</div><h1>Overview</h1></div><button class="secondary" id="refreshBtn">Refresh</button></div><div id="stats" class="stats"></div><div class="two-col"><div class="card"><h2>Editorial queue</h2><div id="queue"></div></div><div class="card"><h2>Quick actions</h2><div class="quick"><button data-open="stories">+ New story</button><button data-open="people">+ New profile</button><button data-open="media">Upload media</button><button data-open="ads">Manage ads</button></div></div></div></section>
+
+<section id="stories" class="panel"><div class="panel-head"><div><div class="eyebrow">EDITORIAL</div><h1>Stories</h1></div><button class="primary" id="newStoryBtn">New story</button></div><div id="storyEditor" class="card hidden"></div><div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Status</th><th>Published</th><th>Actions</th></tr></thead><tbody id="storiesTable"></tbody></table></div></section>
+
+<section id="people" class="panel"><div class="panel-head"><div><div class="eyebrow">REFERENCE DIRECTORY</div><h1>People</h1></div><button class="primary" id="newPersonBtn">New profile</button></div><div id="personEditor" class="card hidden"></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Type</th><th>Status</th><th>Verified</th><th>Actions</th></tr></thead><tbody id="peopleTable"></tbody></table></div></section>
+
+<section id="submissions" class="panel"><div class="panel-head"><div><div class="eyebrow">INBOX</div><h1>Profile submissions</h1></div></div><div class="table-wrap"><table><thead><tr><th>Name</th><th>Profession</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead><tbody id="submissionsTable"></tbody></table></div></section>
+
+<section id="claims" class="panel"><div class="panel-head"><div><div class="eyebrow">OWNERSHIP</div><h1>Profile claims</h1></div></div><div class="table-wrap"><table><thead><tr><th>Claimant</th><th>Profile</th><th>Status</th><th>Proof</th><th>Actions</th></tr></thead><tbody id="claimsTable"></tbody></table></div></section>
+
+<section id="ads" class="panel"><div class="panel-head"><div><div class="eyebrow">REVENUE</div><h1>Advertising</h1></div><button class="primary" id="newAdBtn">New campaign</button></div><div id="adEditor" class="card hidden"></div><div id="adStats" class="stats"></div><div class="table-wrap"><table><thead><tr><th>Campaign</th><th>Advertiser</th><th>Type</th><th>Status</th><th>Clicks</th><th>Actions</th></tr></thead><tbody id="adsTable"></tbody></table></div></section>
+
+<section id="media" class="panel"><div class="panel-head"><div><div class="eyebrow">ASSET LIBRARY</div><h1>Media</h1></div></div><div class="card upload-card"><p>Upload images and video directly to Naija Newspaper storage. The resulting URL can be used in stories and profiles.</p><input id="mediaFile" type="file" accept="image/*,video/mp4,video/webm"><button class="primary" id="uploadBtn">Upload</button><div id="uploadMsg" class="msg"></div></div><div id="mediaList" class="media-grid"></div></section>
+
+<section id="settings" class="panel"><div class="panel-head"><div><div class="eyebrow">CONFIGURATION</div><h1>Site settings</h1></div><button class="primary" id="saveSettingsBtn">Save settings</button></div><div class="card"><div id="settingsForm" class="settings-grid"></div><div id="settingsMsg" class="msg"></div></div></section>
+</main></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="admin.js"></script>
+</body></html>
