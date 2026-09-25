@@ -21,7 +21,7 @@ async function load(){
   try{
     const [p,n,c]=await Promise.all([
       db.from("people_profiles").select("*").eq("is_published",true).order("display_name"),
-      db.from("posts").select("*").eq("is_published",true).order("published_at",{ascending:false}).limit(100),
+      db.from("posts").select("*").eq("is_published",true).order("published_at",{ascending:false}).limit(1000),
       db.from("post_categories").select("*").eq("is_active",true).order("sort_order")
     ]);
     if(p.error||n.error||c.error) throw p.error||n.error||c.error;
