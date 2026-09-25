@@ -7,6 +7,16 @@ const date=v=>v?new Date(v).toLocaleDateString("en-NG",{year:"numeric",month:"sh
 const slugify=v=>String(v||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 let people=[],posts=[],categories=[];
 
+
+function bindNavigation(){
+ document.querySelectorAll('a[href^="#"]').forEach(link=>{
+   link.addEventListener("click",e=>{
+    const id=link.getAttribute("href").slice(1), el=document.getElementById(id);
+    if(el){e.preventDefault();el.scrollIntoView({behavior:"smooth",block:"start"});history.replaceState(null,"","#"+id);}
+   });
+ });
+}
+
 async function load(){
   try{
     const [p,n,c]=await Promise.all([
@@ -17,7 +27,7 @@ async function load(){
     if(p.error||n.error||c.error) throw p.error||n.error||c.error;
     people=p.data||[]; posts=n.data||[]; categories=c.data||[];
     await hydratePostImages(posts);
-    renderHero(posts); renderPeople(people); renderPosts(posts); renderTrending(posts); renderBusinessLegends(); route();
+    renderHero(posts); renderPeople(people); renderPosts(posts); renderTrending(posts); renderBusinessLegends(); bindNavigation(); route();
   }catch(e){
     console.error(e);
     document.querySelectorAll(".loading").forEach(el=>el.outerHTML='<div class="empty">Content is temporarily unavailable. Please try again.</div>');
