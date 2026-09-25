@@ -1,44 +1,202 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Naija Newspaper — Music, News, Sports & Entertainment</title>
-<meta name="description" content="Naija Newspaper — music, entertainment, news, sports, lyrics, interviews, culture and stories shaping Nigeria and Africa.">
-<link rel="canonical" href="https://kharviefx-tech.github.io/naija-newspaper/"><meta name="theme-color" content="#087a43">
-<link rel="stylesheet" href="styles.css?v=20260925-njok-rebuild">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Naija Newspaper","url":"https://kharviefx-tech.github.io/naija-newspaper/"}</script></head>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Naija Newspaper — News, Music, Entertainment, Sports & Business</title>
+<meta name="description" content="Naija Newspaper — an independent digital publication for news, music, entertainment, sports, business, creators and people shaping Nigeria and Africa.">
+<link rel="canonical" href="https://kharviefx-tech.github.io/naija-newspaper/">
+<meta name="theme-color" content="#087a43">
+<link rel="stylesheet" href="styles.css?v=20260925-full-homepage">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Naija Newspaper","url":"https://kharviefx-tech.github.io/naija-newspaper/"}</script>
+</head>
 <body>
-<div class="topline"><div class="wrap topin"><span>Nigeria’s independent digital newspaper for news, music, culture and entertainment.</span><span id="dateLine"></span></div></div>
-<header class="site-head"><div class="wrap masthead"><button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" onclick="window.NaijaMenuToggle&&window.NaijaMenuToggle(event)">☰</button><a class="brand" href="./"><img src="naija-newspaper-logo.svg" alt="Naija Newspaper"></a><div class="head-actions"><button id="searchBtn" class="icon-btn" type="button" aria-label="Search">⌕</button><a class="advertise" href="#advertise">Advertise</a></div></div>
-<nav class="main-nav"><div class="wrap nav-inner"><a href="#home">Home</a><a href="#latest">Latest</a><a href="#songs">Songs</a><a href="#albums">Albums</a><a href="#ep">EP</a><a href="#lyrics">Lyrics</a><a href="#videos">Videos</a><a href="#news">News</a><a href="#sports">Sports</a><a href="#artists">Artists</a><a href="#charts">Charts</a><a href="#reviews">Reviews</a><a href="#covers">Cover</a><a href="#podcast">Podcast</a><a href="#topics">Topics</a></div></nav>
-<div class="breaking-bar"><div class="wrap breaking-in"><b>HOT STORIES</b><div class="breaking-track"><a class="hot-tab" href="#songs">Music</a><a class="hot-tab" href="#news">News</a><a class="hot-tab" href="#sports">Sports</a><a class="hot-tab" href="#lyrics">Lyrics</a><a class="hot-tab" href="#celebrity-desk">Entertainment</a></div><a class="hot-tab latest-hot" href="#latest">Latest →</a></div></div></header>
+<div class="utility"><div class="wrap utility-inner"><span>NAIJA NEWSPAPER · INDEPENDENT DIGITAL PUBLICATION</span><span id="dateLine"></span></div></div>
+
+<header class="site-header">
+  <div class="wrap masthead">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+    <a class="brand" href="#home" aria-label="Naija Newspaper home"><img src="naija-newspaper-logo.svg" alt="Naija Newspaper"></a>
+    <div class="mast-actions">
+      <button id="searchBtn" class="search-trigger" type="button">Search <span>⌕</span></button>
+      <a class="advertise" href="#advertise">Advertise</a>
+    </div>
+  </div>
+  <nav class="primary-nav"><div class="wrap nav-scroll">
+    <a href="#home">Home</a><a href="#songs">Songs</a><a href="#news">News</a><a href="#lyrics">Lyrics</a><a href="#sports">Sports</a><a href="#celebrity-desk">Entertainment</a><a href="#business-legends">Business Legends</a><a href="#videos">Videos</a><a href="#artists">Artists</a><a href="#charts">Ranking</a><a href="#topics">Topics</a><a href="#advertise">Advertise</a>
+  </div></nav>
+  <div class="hot-strip"><div class="wrap hot-inner"><strong>HOT STORIES</strong><div class="hot-links"><a href="#songs">Music</a><a href="#news">News</a><a href="#sports">Sports</a><a href="#lyrics">Lyrics</a><a href="#celebrity-desk">Entertainment</a></div><a class="latest-link" href="#latest">Latest →</a></div></div>
+</header>
+
 <main id="app">
-<section id="home" class="wrap hero"><div class="hero-grid"><article class="lead-card"><div class="lead-media">NAIJA NEWSPAPER</div><div class="kicker">NEWS</div><h1>The latest stories, sounds and conversations</h1><p>Music, news, sports, lyrics, interviews and culture — presented in one editorial destination.</p></article><aside class="hot-box"><div class="section-head"><div><span class="kicker">HOT STORIES</span><h2>Trending</h2></div></div><div id="trendingList"></div></aside></div></section>
-<section id="latest" class="wrap section"><div class="section-head"><div><span class="kicker">LATEST</span><h2>Latest Articles</h2></div><a href="#news">More →</a></div><div id="nLatest" class="njok-grid latest-grid"></div></section>
-<section class="wrap section music-ranking"><div class="section-head"><div><span class="kicker">BEST NEW MUSIC</span><h2>Best New Music</h2></div><span>Week of September 25, 2026</span></div><div id="nSongs" class="njok-grid ranking-grid"></div></section>
-<section id="songs" class="wrap section"><div class="section-head"><div><span class="kicker">SONGS</span><h2>Songs</h2></div><a href="#topics">More →</a></div><div id="nSongs2" class="njok-grid"></div></section>
-<section id="albums" class="wrap section"><div class="section-head"><div><span class="kicker">ALBUMS</span><h2>Albums</h2></div><a href="#topics">More →</a></div><div id="nAlbums" class="njok-grid"></div></section>
-<section id="celebrity-desk" class="wrap section"><div class="section-head"><div><span class="kicker">CELEBRITY DESK</span><h2>Celebrity Profiles & Features</h2></div><a href="#celebrity-desk">View all →</a></div><div id="celebrityGrid" class="njok-grid latest-grid celebrity-grid"></div></section>
-<section id="news" class="wrap section"><div class="section-head"><div><span class="kicker">NEWS</span><h2>News</h2></div><a href="#all-news">More →</a></div><div id="newsGrid" class="story-grid"></div></section>
-<section id="lyrics" class="wrap section"><div class="section-head"><div><span class="kicker">LYRICS</span><h2>Lyrics</h2></div><a href="#topics">More →</a></div><div id="nLyrics" class="njok-grid"></div></section>
-<section id="sports" class="wrap section"><div class="section-head"><div><span class="kicker">SPORTS</span><h2>Sports</h2></div></div><div id="sportsWidget" class="paper-list"></div></section>
-<section id="videos" class="wrap section"><div class="section-head"><div><span class="kicker">VIDEOS</span><h2>Videos</h2></div><a href="#topics">More →</a></div><div id="nVideos" class="njok-grid"></div></section>
-<section id="editor-picks" class="wrap section"><div class="section-head"><div><span class="kicker">EDITOR'S PICK</span><h2>Editor's Picks</h2></div></div><div id="nPicks" class="njok-grid"></div></section>
-<section id="artists" class="wrap section"><div class="section-head"><div><span class="kicker">ARTISTS</span><h2>Artists</h2></div></div><div id="nArtists" class="njok-grid"></div></section>
-<section id="charts" class="wrap section"><div class="section-head"><div><span class="kicker">CHARTS</span><h2>Charts & Rankings</h2></div></div><div id="nCharts" class="njok-grid"></div></section>
-<section id="ep" class="wrap section"><div class="section-head"><div><span class="kicker">EP</span><h2>EPs & Projects</h2></div></div><div id="nEp" class="njok-grid"></div></section>
-<section id="reviews" class="wrap section"><div class="section-head"><div><span class="kicker">ALBUM REVIEW</span><h2>Album Reviews</h2></div></div><div id="nReviews" class="njok-grid"></div></section>
-<section id="covers" class="wrap section"><div class="section-head"><div><span class="kicker">COVER</span><h2>Cover Stories</h2></div></div><div id="nCovers" class="njok-grid"></div></section>
-<section id="podcast" class="wrap section"><div class="section-head"><div><span class="kicker">PODCAST</span><h2>Podcast</h2></div></div><div id="nPodcast" class="njok-grid"></div></section>
-<section id="playlists" class="wrap section"><div class="section-head"><div><span class="kicker">PLAYLISTS</span><h2>Playlists & Mixtapes</h2></div></div><div id="nPlaylists" class="njok-grid"></div></section>
-<section id="interviews" class="wrap section"><div class="section-head"><div><span class="kicker">INTERVIEWS</span><h2>Interviews</h2></div></div><div id="interviewsWidget" class="paper-list"></div></section>
-<section id="events" class="wrap section"><div class="section-head"><div><span class="kicker">EVENTS</span><h2>Events</h2></div></div><div id="eventsWidget" class="paper-list"></div></section>
-<section id="topics" class="wrap section"><div class="section-head"><div><span class="kicker">TOPICS</span><h2>Explore Topics</h2></div></div><div class="topic-cloud"><a href="#songs">Songs</a><a href="#albums">Albums</a><a href="#lyrics">Lyrics</a><a href="#videos">Videos</a><a href="#news">News</a><a href="#sports">Sports</a><a href="#artists">Artists</a><a href="#charts">Charts</a><a href="#reviews">Album Review</a><a href="#covers">Cover</a><a href="#podcast">Podcast</a><a href="#events">Events</a><a href="#playlists">DJ Mixtapes</a></div></section>
-<section id="sponsored" class="wrap section"><div class="section-head"><div><span class="kicker">SPONSORED</span><h2>Promotions</h2></div></div><div id="nSponsored" class="njok-grid"></div></section>
-<section id="all-news" class="wrap section"><div class="section-head"><div><span class="kicker">ARCHIVE</span><h2>All Stories</h2></div></div><div id="allNewsGrid" class="story-grid"></div></section>
-<section id="advertise" class="wrap advertise-section"><div><span class="kicker">ADVERTISING</span><h2>Advertise on Naija Newspaper</h2><p>Display campaigns, sponsored stories, artist promotion, business features and event promotion.</p></div><a href="mailto:avannahvictor3@gmail.com?subject=Naija%20Newspaper%20Advertising">Contact advertising →</a></section>
+<section id="home" class="wrap home-hero">
+  <div class="hero-main">
+    <div class="hero-feature" id="heroFeature"><div class="hero-placeholder">NAIJA NEWSPAPER</div><div class="eyebrow">FEATURED</div><h1>Stories shaping the conversation.</h1><p>News, music, entertainment, sports, business and people — in one editorial destination.</p></div>
+    <div class="hero-side" id="trendingList"><div class="side-heading">HOT STORIES</div></div>
+  </div>
+  <div class="hero-rail">
+    <div class="rail-heading"><span>EDITOR'S DESK</span><b>Trending now</b></div>
+    <div id="heroRail"></div>
+  </div>
+</section>
+
+<section id="latest" class="wrap section latest-section">
+  <div class="section-head"><div><span class="eyebrow">LATEST</span><h2>Latest</h2></div><a href="#all-news">View all →</a></div>
+  <div id="nLatest" class="news-grid latest-grid"></div>
+</section>
+
+<section class="full-bleed music-band">
+  <div class="wrap">
+    <div class="section-head light"><div><span class="eyebrow">BEST NEW MUSIC</span><h2>Best New Music</h2></div><span>Weekly discovery</span></div>
+    <div id="nSongs" class="music-grid"></div>
+  </div>
+</section>
+
+<section id="songs" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">MUSIC</span><h2>Songs</h2></div><a href="#topics">More →</a></div>
+  <div id="nSongs2" class="news-grid three-grid"></div>
+</section>
+
+<section id="albums" class="wrap section compact-section">
+  <div class="section-head"><div><span class="eyebrow">MUSIC</span><h2>Albums & EPs</h2></div><a href="#ep">Explore →</a></div>
+  <div id="nAlbums" class="news-grid three-grid"></div>
+</section>
+
+<section id="news" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">NEWS</span><h2>News</h2></div><a href="#all-news">More →</a></div>
+  <div class="section-columns">
+    <div id="newsGrid" class="news-grid three-grid"></div>
+    <aside class="side-list"><div class="side-heading">LATEST NEWS</div><div id="latestWidget"></div></aside>
+  </div>
+</section>
+
+<section id="lyrics" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">LYRICS</span><h2>Lyrics</h2></div><a href="#topics">More →</a></div>
+  <div id="nLyrics" class="news-grid three-grid"></div>
+</section>
+
+<section id="sports" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">SPORTS</span><h2>Sports</h2></div><a href="#topics">More →</a></div>
+  <div class="section-columns">
+    <div id="sportsWidget" class="rank-list"></div>
+    <div class="sports-feature"><span class="eyebrow">SPORTS DESK</span><h3>Headlines, results and the stories behind the game.</h3><p>Follow major Nigerian and international sporting conversations.</p></div>
+  </div>
+</section>
+
+<section id="celebrity-desk" class="wrap section dark-section">
+  <div class="section-head light"><div><span class="eyebrow">ENTERTAINMENT</span><h2>Celebrity Desk</h2></div><a href="#all-news">View all →</a></div>
+  <div id="celebrityGrid" class="news-grid four-grid"></div>
+</section>
+
+<section id="business-legends" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">SIGNATURE FRANCHISE</span><h2>Business Legends</h2></div><a href="#topics">Explore →</a></div>
+  <div class="franchise-grid">
+    <article class="franchise-lead"><div class="franchise-mark">BL</div><span class="eyebrow">BUSINESS · PEOPLE · IMPACT</span><h3>Profiles of founders, executives, investors and builders shaping the future.</h3><p>A flagship Naija Newspaper franchise for serious business stories and notable people.</p></article>
+    <div id="businessWidget" class="rank-list"></div>
+  </div>
+</section>
+
+<section id="videos" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">VIDEO</span><h2>NJ Video</h2></div><a href="#topics">More →</a></div>
+  <div id="nVideos" class="news-grid three-grid"></div>
+</section>
+
+<section id="editor-picks" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">EDITORIAL</span><h2>Editor's Picks</h2></div></div>
+  <div id="nPicks" class="news-grid three-grid"></div>
+</section>
+
+<section id="artists" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">DIRECTORY</span><h2>Artists</h2></div><a href="#topics">Artists A–Z →</a></div>
+  <div id="nArtists" class="news-grid three-grid"></div>
+</section>
+
+<section id="charts" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">RANKING</span><h2>Charts & Rankings</h2></div></div>
+  <div id="nCharts" class="rank-grid"></div>
+</section>
+
+<section id="ep" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">MUSIC</span><h2>EPs & Projects</h2></div></div>
+  <div id="nEp" class="news-grid three-grid"></div>
+</section>
+
+<section id="reviews" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">REVIEWS</span><h2>Album Reviews</h2></div></div>
+  <div id="nReviews" class="news-grid three-grid"></div>
+</section>
+
+<section id="covers" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">FEATURE</span><h2>Cover Stories</h2></div></div>
+  <div id="nCovers" class="news-grid three-grid"></div>
+</section>
+
+<section id="podcast" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">AUDIO</span><h2>Podcast</h2></div></div>
+  <div id="nPodcast" class="news-grid three-grid"></div>
+</section>
+
+<section id="playlists" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">DISCOVERY</span><h2>Playlists & Mixtapes</h2></div></div>
+  <div id="nPlaylists" class="news-grid three-grid"></div>
+</section>
+
+<section id="interviews" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">PEOPLE</span><h2>Interviews</h2></div></div>
+  <div id="interviewsWidget" class="rank-list"></div>
+</section>
+
+<section id="events" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">WHAT'S ON</span><h2>Events</h2></div></div>
+  <div id="eventsWidget" class="rank-list"></div>
+</section>
+
+<section id="topics" class="wrap section topics-section">
+  <div class="section-head"><div><span class="eyebrow">EXPLORE</span><h2>Topics</h2></div></div>
+  <div class="topic-cloud"><a href="#songs">Songs</a><a href="#news">News</a><a href="#lyrics">Lyrics</a><a href="#sports">Sports</a><a href="#celebrity-desk">Entertainment</a><a href="#business-legends">Business Legends</a><a href="#artists">Artists</a><a href="#charts">Charts</a><a href="#reviews">Album Review</a><a href="#covers">Cover Stories</a><a href="#podcast">Podcast</a><a href="#playlists">DJ Mixtapes</a><a href="#interviews">Interviews</a><a href="#events">Events</a><a href="#sponsored">Sponsored</a></div>
+</section>
+
+<section id="sponsored" class="full-bleed sponsored-band">
+  <div class="wrap"><div class="section-head light"><div><span class="eyebrow">PARTNERS</span><h2>Sponsored</h2></div><span>Clearly labelled promotions</span></div><div id="nSponsored" class="news-grid three-grid"></div></div>
+</section>
+
+<section id="all-news" class="wrap section">
+  <div class="section-head"><div><span class="eyebrow">ARCHIVE</span><h2>All Stories</h2></div></div>
+  <div id="allNewsGrid" class="news-grid three-grid"></div>
+</section>
+
+<section id="advertise" class="wrap advertise-panel">
+  <div><span class="eyebrow">ADVERTISING</span><h2>Put your brand in front of Naija's digital audience.</h2><p>Display campaigns, sponsored stories, artist promotion, business features and event promotion.</p></div>
+  <a href="mailto:avannahvictor3@gmail.com?subject=Naija%20Newspaper%20Advertising">Start an advertising conversation →</a>
+</section>
+
+<section id="profile" class="wrap profile-view hidden"></section>
 </main>
-<footer class="footer"><div class="wrap footer-grid"><div><img src="naija-newspaper-logo.svg" alt="Naija Newspaper"><p>Music, news, sports, entertainment and culture.</p></div><div><h4>Explore</h4><a href="#latest">Latest</a><a href="#songs">Songs</a><a href="#news">News</a><a href="#sports">Sports</a></div><div><h4>Music</h4><a href="#albums">Albums</a><a href="#lyrics">Lyrics</a><a href="#videos">Videos</a><a href="#artists">Artists</a></div><div><h4>Publication</h4><a href="#topics">Topics</a><a href="#advertise">Advertise</a><a href="./admin.html">Admin</a></div></div><div class="wrap footer-bottom">© <span id="year"></span> Naija Newspaper. All rights reserved.</div></footer>
-<aside id="menuDrawer" class="menu-drawer" aria-hidden="true"><div class="drawer-tabs"><button class="drawer-tab active" data-drawer-tab="main">Main</button><button class="drawer-tab" data-drawer-tab="music">Music</button><button class="drawer-tab" data-drawer-tab="more">More</button></div><div class="drawer-panel active" data-drawer-panel="main"><a href="#home">Home</a><a href="#latest">Latest</a><a href="#news">News</a><a href="#sports">Sports</a><a href="#artists">Artists</a><a href="#charts">Charts</a><a href="#topics">Topics</a></div><div class="drawer-panel" data-drawer-panel="music"><a href="#songs">Songs</a><a href="#albums">Albums</a><a href="#ep">EP</a><a href="#lyrics">Lyrics</a><a href="#videos">Videos</a><a href="#reviews">Reviews</a><a href="#covers">Cover</a><a href="#playlists">Playlists</a><a href="#podcast">Podcast</a></div><div class="drawer-panel" data-drawer-panel="more"><a href="#interviews">Interviews</a><a href="#events">Events</a><a href="#sponsored">Sponsored</a><a href="#advertise">Advertise</a></div></aside><div id="drawerBackdrop" class="drawer-backdrop"></div>
-<div id="searchPanel" class="search-panel"><div class="wrap search-inner"><button id="closeSearch" class="close">×</button><input id="globalSearch" placeholder="Search Naija Newspaper…"><div id="searchResults"></div></div></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js?v=20260925-hot-tabs"></script>
-<script>window.NaijaMenuToggle=function(e){if(e){e.preventDefault();e.stopPropagation()}var d=document.getElementById("menuDrawer"),b=document.getElementById("drawerBackdrop"),m=document.getElementById("menuBtn");if(!d||!b||!m)return;var o=d.getAttribute("aria-hidden")!=="false";d.setAttribute("aria-hidden",String(!o));b.classList.toggle("open",o);d.classList.toggle("open",o);m.setAttribute("aria-expanded",String(o));document.body.classList.toggle("drawer-open",o)};document.addEventListener("click",function(e){var t=e.target.closest("[data-drawer-tab]");if(t){var k=t.dataset.drawerTab;document.querySelectorAll("[data-drawer-tab]").forEach(x=>x.classList.toggle("active",x===t));document.querySelectorAll("[data-drawer-panel]").forEach(x=>x.classList.toggle("active",x.dataset.drawerPanel===k));return}if(e.target.closest("#drawerBackdrop")||e.target.closest("#menuDrawer a"))window.NaijaMenuToggle(e)});</script>
-</body></html>
+
+<footer class="footer">
+  <div class="wrap footer-top">
+    <div><img src="naija-newspaper-logo.svg" alt="Naija Newspaper"><p>News, music, entertainment, sports, business and people.</p></div>
+    <div><h4>Explore</h4><a href="#latest">Latest</a><a href="#news">News</a><a href="#songs">Songs</a><a href="#sports">Sports</a></div>
+    <div><h4>People</h4><a href="#celebrity-desk">Celebrity Desk</a><a href="#business-legends">Business Legends</a><a href="#artists">Artists</a><a href="#interviews">Interviews</a></div>
+    <div><h4>Publication</h4><a href="#topics">Topics</a><a href="#advertise">Advertise</a><a href="./admin.html">Admin</a></div>
+  </div>
+  <div class="wrap footer-bottom">© <span id="year"></span> Naija Newspaper. All rights reserved.</div>
+</footer>
+
+<aside id="menuDrawer" class="menu-drawer" aria-hidden="true">
+  <div class="drawer-head"><strong>NAIJA NEWSPAPER</strong><button id="closeMenu" type="button">×</button></div>
+  <div class="drawer-tabs"><button class="drawer-tab active" data-drawer-tab="main">Main</button><button class="drawer-tab" data-drawer-tab="music">Music</button><button class="drawer-tab" data-drawer-tab="more">More</button></div>
+  <div class="drawer-panel active" data-drawer-panel="main"><a href="#home">Home</a><a href="#latest">Latest</a><a href="#news">News</a><a href="#sports">Sports</a><a href="#celebrity-desk">Entertainment</a><a href="#business-legends">Business Legends</a><a href="#topics">Topics</a><a href="#advertise">Advertise</a></div>
+  <div class="drawer-panel" data-drawer-panel="music"><a href="#songs">Songs</a><a href="#albums">Albums</a><a href="#ep">EP</a><a href="#lyrics">Lyrics</a><a href="#videos">Videos</a><a href="#artists">Artists</a><a href="#charts">Ranking</a><a href="#reviews">Reviews</a><a href="#playlists">Playlists</a></div>
+  <div class="drawer-panel" data-drawer-panel="more"><a href="#covers">Cover Stories</a><a href="#podcast">Podcast</a><a href="#interviews">Interviews</a><a href="#events">Events</a><a href="#sponsored">Sponsored</a><a href="./admin.html">Admin</a></div>
+</aside>
+<div id="drawerBackdrop" class="drawer-backdrop"></div>
+
+<div id="searchPanel" class="search-panel">
+  <div class="wrap search-inner"><button id="closeSearch" class="close" type="button">×</button><div class="search-label">SEARCH NAIJA NEWSPAPER</div><input id="globalSearch" aria-label="Search Naija Newspaper" placeholder="Search stories, people and artists…"><div id="searchResults"></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js?v=20260925-full-homepage"></script>
+</body>
+</html>
