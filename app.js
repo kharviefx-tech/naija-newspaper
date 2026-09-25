@@ -63,16 +63,56 @@ function newspaperWidget(items){
   return '<div class="paper-lead">'+storyCard(lead)+'</div><div class="paper-list">'+rest.map((x,i)=>'<article class="paper-list-item"><span class="paper-number">'+String(i+1).padStart(2,'0')+'</span><div><div class="story-meta">'+esc(categoryName(x.category_id))+'</div><h3><a href="#story/'+encodeURIComponent(x.slug||x.id)+'">'+esc(x.title||'Untitled story')+'</a></h3><p>'+esc(x.excerpt||'')+'</p></div></article>').join('')+'</div>';
 }
 function categoryName(id){const m={"b3f90d03-c7be-4cf4-8677-9a961bdd2d1e":"NEWS","f08e1fe3-76c6-47d9-9dd1-bd062b5ae326":"ENTERTAINMENT","46b002f0-2b86-4f33-9d64-988ad980cba9":"MUSIC","f73902ba-76f3-49f1-89d5-3ac128827c9b":"BUSINESS","89c05491-2c32-4461-97c2-fcd85eaea124":"SPORTS","8fef5a18-8d61-4c84-970e-58acca7d7ac3":"TECHNOLOGY","f4b7cd65-3f7e-42f6-99be-689454d80fbe":"CULTURE","a8e72a7d-6bb2-49ba-ae43-04079fbd4995":"INTERVIEWS","3b9661dd-5532-4eab-90f4-b90b4e768935":"EVENTS"};return m[id]||"STORIES";}
+const CATEGORY_IDS={
+ news:"b3f90d03-c7be-4cf4-8677-9a961bdd2d1e",
+ entertainment:"f08e1fe3-76c6-47d9-9dd1-bd062b5ae326",
+ music:"46b002f0-2b86-4f33-9d64-988ad980cba9",
+ people:"bc900eae-7147-4437-aaa3-5c706652f51c",
+ business:"f73902ba-76f3-49f1-89d5-3ac128827c9b",
+ technology:"8fef5a18-8d61-4c84-970e-58acca7d7ac3",
+ sports:"89c05491-2c32-4461-97c2-fcd85eaea124",
+ culture:"f4b7cd65-3f7e-42f6-99be-689454d80fbe",
+ interviews:"a8e72a7d-6bb2-49ba-ae43-04079fbd4995",
+ events:"3b9661dd-5532-4eab-90f4-b90b4e768935"
+};
+function localStories(section,limit=6){
+ const q=section.toLowerCase();
+ let arr=posts.filter(x=>{
+   const t=(x.title+" "+(x.excerpt||"")+" "+(x.content||"")).toLowerCase();
+   if(q==="music"||q==="songs") return x.category_id===CATEGORY_IDS.music;
+   if(q==="lyrics") return t.includes("lyrics");
+   if(q==="albums"||q==="ep") return t.includes("ep")||t.includes("project");
+   if(q==="artists") return x.category_id===CATEGORY_IDS.people;
+   if(q==="charts") return t.includes("chart");
+   if(q==="reviews") return t.includes("review")||t.includes("album");
+   if(q==="covers") return t.includes("cover");
+   if(q==="podcast") return t.includes("podcast")||x.category_id===CATEGORY_IDS.interviews;
+   if(q==="playlists") return t.includes("playlist")||t.includes("mixtape");
+   if(q==="videos") return x.category_id===CATEGORY_IDS.entertainment||x.category_id===CATEGORY_IDS.sports;
+   if(q==="business") return x.category_id===CATEGORY_IDS.business;
+   if(q==="sports") return x.category_id===CATEGORY_IDS.sports;
+   if(q==="entertainment") return x.category_id===CATEGORY_IDS.entertainment;
+   if(q==="news") return x.category_id===CATEGORY_IDS.news;
+   if(q==="interviews") return x.category_id===CATEGORY_IDS.interviews;
+   if(q==="events") return x.category_id===CATEGORY_IDS.events;
+   return true;
+ }).slice(0,limit);
+ return arr;
+}
+function localSectionHtml(section,limit=3){
+ const arr=localStories(section,limit);
+ return arr.length?arr.map(storyCard).join(""):"";
+}
 function renderPosts(items){
   const html=items.length?items.map(storyCard).join(""):'<div class="empty">No published stories yet. Your editorial desk can publish the first story.</div>';
   $("#newsGrid").innerHTML=items.slice(0,12).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
   if($("#nLatest")) $("#nLatest").innerHTML=items.slice(0,8).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
   $("#allNewsGrid").innerHTML=html;
-  const celebrity=items.filter(x=>String(x.category_id||"")==="f08e1fe3-76c6-47d9-9dd1-bd062b5ae326").slice(0,100);
-  $("#celebrityGrid").innerHTML=celebrity.map(storyCard).join("")||'<div class="empty">No celebrity profiles yet.</div>';
+  const celebrity=items.filter(x=>String(x.category_id||"")===CATEGORY_IDS.entertainment).slice(0,100);
+  $("#celebrityGrid").innerHTML=celebrity.map(storyCard).join("")||'<div class="empty">No celebrity stories yet.</div>';
   if($("#latestWidget")) $("#latestWidget").innerHTML=newspaperWidget(items.slice(0,5));
   if($("#topWidget")) $("#topWidget").innerHTML=newspaperWidget(items.slice(5,10).length?items.slice(5,10):items.slice(0,5));
-  const ids={business:"f73902ba-76f3-49f1-89d5-3ac128827c9b",sports:"89c05491-2c32-4461-97c2-fcd85eaea124",technology:"8fef5a18-8d61-4c84-970e-58acca7d7ac3",culture:"f4b7cd65-3f7e-42f6-99be-689454d80fbe",interviews:"a8e72a7d-6bb2-49ba-ae43-04079fbd4995",events:"3b9661dd-5532-4eab-90f4-b90b4e768935"};
+  const ids={business:CATEGORY_IDS.business,sports:CATEGORY_IDS.sports,technology:CATEGORY_IDS.technology,culture:CATEGORY_IDS.culture,interviews:CATEGORY_IDS.interviews,events:CATEGORY_IDS.events};
   Object.entries(ids).forEach(([name,id])=>{const el=$("#"+name+"Widget");if(el)el.innerHTML=newspaperWidget(items.filter(x=>String(x.category_id||"")===id).slice(0,5));});
 }
 function personCard(x){
@@ -215,7 +255,12 @@ async function loadNotJustOkModules(){
  try{
   const data=Object.fromEntries(await Promise.all(jobs));
   const card=item=>'<article class="njok-card">'+(item.thumbnail?'<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow"><img src="'+esc(item.thumbnail)+'" alt="" loading="lazy" onerror="this.remove()"></a>':'')+'<div class="story-meta">NOTJUSTOK · '+esc((item.categories&&item.categories[0])||"STORY")+'</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"Latest")+'</div></article>';
-  Object.entries({nSongs:"songs",nSongs2:"songs",nAlbums:"albums",nLyrics:"lyrics",nVideos:"videos",nPicks:"picks"}).forEach(([id,key])=>{const el=$("#"+id);if(el)el.innerHTML=(data[key]||[]).map(card).join("")||'<div class="empty">No stories available.</div>';});
+  Object.entries({nSongs:"songs",nSongs2:"songs",nAlbums:"albums",nLyrics:"lyrics",nVideos:"videos",nPicks:"picks"}).forEach(([id,key])=>{
+    const el=$("#"+id); if(!el)return;
+    const local=localSectionHtml(id==="nSongs"||id==="nSongs2"?"music":id==="nAlbums"?"albums":id==="nLyrics"?"lyrics":id==="nVideos"?"videos":"all",3);
+    const remote=(data[key]||[]).map(card).join("");
+    el.innerHTML=local+remote||'<div class="empty">No stories available.</div>';
+  });
  }catch(e){console.warn("NotJustOk feeds unavailable",e);}
 }
 loadNotJustOkModules();
@@ -239,7 +284,12 @@ async function loadNotJustOkExtra(){
    const d=await r.json(); return [id,(d.items||[]).slice(0,6)];
   }));
   const card=item=>'<article class="njok-card">'+(item.thumbnail?'<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow"><img src="'+esc(item.thumbnail)+'" alt="" loading="lazy" onerror="this.remove()"></a>':'')+'<div class="story-meta">NOTJUSTOK · '+esc((item.categories&&item.categories[0])||"EDITORIAL")+'</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"Latest")+'</div></article>';
-  entries.forEach(([id,items])=>{const el=$("#"+id);if(el)el.innerHTML=items.map(card).join("")||'<div class="empty">No items available.</div>';});
+  entries.forEach(([id,items])=>{
+    const el=$("#"+id); if(!el)return;
+    const section={nArtists:"artists",nCharts:"charts",nEp:"ep",nReviews:"reviews",nCovers:"covers",nPodcast:"podcast",nSponsored:"sponsored",nPlaylists:"playlists"}[id];
+    const local=section==="sponsored"?"<div class=\"editorial-note\"><strong>Sponsored desk</strong><p>No paid promotion is currently published. Sponsored stories will be clearly labelled when a campaign is active.</p></div>":localSectionHtml(section||"all",3);
+    el.innerHTML=local+items.map(card).join("")||'<div class="empty">No items available.</div>';
+  });
  }catch(e){console.warn("Extended NotJustOk feeds unavailable",e);}
 }
 loadNotJustOkExtra();setInterval(loadNotJustOkExtra,10*60*1000);\n
