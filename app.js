@@ -242,7 +242,38 @@ async function loadNotJustOkExtra(){
   entries.forEach(([id,items])=>{const el=$("#"+id);if(el)el.innerHTML=items.map(card).join("")||'<div class="empty">No items available.</div>';});
  }catch(e){console.warn("Extended NotJustOk feeds unavailable",e);}
 }
-loadNotJustOkExtra();setInterval(loadNotJustOkExtra,10*60*1000);
+loadNotJustOkExtra();setInterval(loadNotJustOkExtra,10*60*1000);\n
+const CELEBRITY_NAMES=["Davido","Wizkid","Burna Boy","Tems","Tiwa Savage","Rema","Asake","Olamide","Yemi Alade","Ayra Starr","Fireboy","Omah Lay","BNXN","Phyno","Flavour","2Baba","Patoranking","Falz","Mr Eazi","Adekunle Gold"];
+async function loadRealCelebrityArticles(){
+  const urls=[
+    "https://punchng.com/tags/afrobeats/feed/",
+    "https://notjustok.com/feed/"
+  ];
+  try{
+    const results=await Promise.all(urls.map(async url=>{
+      const r=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(url),{cache:"no-store"});
+      if(!r.ok) return [];
+      const d=await r.json();
+      return (d.items||[]).map(x=>({...x,source:url.includes("punchng")?"PUNCH":"NotJustOk"}));
+    }));
+    const all=results.flat();
+    const seen=new Set(), matches=[];
+    all.forEach(item=>{
+      const hay=(item.title+" "+(item.description||"")).toLowerCase();
+      if(!CELEBRITY_NAMES.some(n=>hay.includes(n.toLowerCase()))) return;
+      const key=item.link||item.title;
+      if(seen.has(key)) return;
+      seen.add(key); matches.push(item);
+    });
+    const card=item=>'<article class="news-card">'+(item.thumbnail?'<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow"><img src="'+esc(item.thumbnail)+'" alt="" loading="lazy" onerror="this.remove()"></a>':'<div class="news-placeholder">NAIJA</div>')+'<div class="story-meta">'+esc(item.source||"SOURCE")+' · ENTERTAINMENT</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><p>Read the original report and full details from the publishing source.</p><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"Latest")+'</div></article>';
+    const el=$("#celebrityGrid");
+    if(el) el.innerHTML=matches.slice(0,12).map(card).join("")||'<div class="empty">No current celebrity stories available.</div>';
+  }catch(e){console.warn("Real celebrity feeds unavailable",e);}
+}
+loadRealCelebrityArticles();
+setInterval(loadRealCelebrityArticles,10*60*1000);
+
+
 
 
 
