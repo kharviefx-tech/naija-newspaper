@@ -36,7 +36,7 @@ async function load(){
 
 function renderHero(items){
  const x=items[0]; if(!x)return;
- const card=document.querySelector(".lead-card"); if(!card)return;
+ const card=document.querySelector("#heroFeature"); if(!card)return;
  card.innerHTML=storyImage(x,"hero-story-img")+
  '<div class="story-meta">'+esc(x.content_type||"NEWS")+" · "+esc(date(x.published_at))+"</div>"+
  '<h1>'+esc(x.title||"Latest story")+"</h1>"+
@@ -44,12 +44,12 @@ function renderHero(items){
  '<a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read full story →</a>";
 }
 function storyCard(x){
- return '<article class="story-card">'+storyImage(x,"story-img")+
+ return '<article class="news-card">'+storyImage(x,"story-img")+
  '<div class="story-body"><div class="story-meta">'+esc(x.content_type||"NEWS")+" · "+esc(date(x.published_at))+"</div><h3>"+esc(x.title||"Untitled story")+"</h3><p>"+esc(x.excerpt||x.meta_description||"Read the latest story from Naija Newspaper.")+'</p><a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read story →</a></div></article>';
 }
 
 function renderBusinessLegends(){
-  const grid=$("#businessLegendsGrid"); if(!grid)return;
+  const grid=$("#businessWidget"); if(!grid)return;
   const businessPosts=posts.filter(x=>String(x.content_type||"").toLowerCase().includes("business")||String(x.title||"").toLowerCase().match(/business|investment|investor|entrepreneur|executive|company|ceo|founder|economy|funding|industry/));
   const leaders=people.filter(x=>["entrepreneur","professional","public_figure"].includes(String(x.person_type||"").toLowerCase())||String(x.category||"").toLowerCase().includes("business")).slice(0,4);
   const cards=businessPosts.slice(0,4).map(storyCard).join("");
@@ -66,6 +66,7 @@ function categoryName(id){const m={"b3f90d03-c7be-4cf4-8677-9a961bdd2d1e":"NEWS"
 function renderPosts(items){
   const html=items.length?items.map(storyCard).join(""):'<div class="empty">No published stories yet. Your editorial desk can publish the first story.</div>';
   $("#newsGrid").innerHTML=items.slice(0,12).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
+  if($("#nLatest")) $("#nLatest").innerHTML=items.slice(0,8).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
   $("#allNewsGrid").innerHTML=html;
   const celebrity=items.filter(x=>String(x.category_id||"")==="f08e1fe3-76c6-47d9-9dd1-bd062b5ae326").slice(0,100);
   $("#celebrityGrid").innerHTML=celebrity.map(storyCard).join("")||'<div class="empty">No celebrity profiles yet.</div>';
@@ -79,7 +80,7 @@ function personCard(x){
 }
 function renderPeople(items){
   const html=items.length?items.slice(0,12).map(personCard).join(""):'<div class="empty">No published profiles yet. The editorial desk is building the directory.</div>';
-  $("#peopleGrid").innerHTML=html; $("#allPeopleGrid").innerHTML=items.map(personCard).join("")||html;
+  if($("#peopleGrid")) $("#peopleGrid").innerHTML=html; if($("#allPeopleGrid")) $("#allPeopleGrid").innerHTML=items.map(personCard).join("")||html;
 }
 function renderTrending(items){
   $("#trendingList").innerHTML=items.slice(0,5).map((x,i)=>'<article><div class="story-meta">0'+(i+1)+'</div><h4><a href="#story/'+encodeURIComponent(x.slug||x.id)+'">'+esc(x.title||"Latest story")+'</a></h4></article>').join("")||"<p>No stories published yet.</p>";
@@ -214,7 +215,7 @@ async function loadNotJustOkModules(){
  try{
   const data=Object.fromEntries(await Promise.all(jobs));
   const card=item=>'<article class="njok-card">'+(item.thumbnail?'<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow"><img src="'+esc(item.thumbnail)+'" alt="" loading="lazy" onerror="this.remove()"></a>':'')+'<div class="story-meta">NOTJUSTOK · '+esc((item.categories&&item.categories[0])||"STORY")+'</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"Latest")+'</div></article>';
-  Object.entries({nLatest:"latest",nSongs:"songs",nAlbums:"albums",nLyrics:"lyrics",nVideos:"videos",nPicks:"picks"}).forEach(([id,key])=>{const el=$("#"+id);if(el)el.innerHTML=(data[key]||[]).map(card).join("")||'<div class="empty">No stories available.</div>';});
+  Object.entries({nSongs:"songs",nSongs2:"songs",nAlbums:"albums",nLyrics:"lyrics",nVideos:"videos",nPicks:"picks"}).forEach(([id,key])=>{const el=$("#"+id);if(el)el.innerHTML=(data[key]||[]).map(card).join("")||'<div class="empty">No stories available.</div>';});
  }catch(e){console.warn("NotJustOk feeds unavailable",e);}
 }
 loadNotJustOkModules();
@@ -245,5 +246,5 @@ loadNotJustOkExtra();setInterval(loadNotJustOkExtra,10*60*1000);
 
 
 
-// Mirror the music discovery rail into the Best New Music module.
+// Full homepage rebuild: the CMS remains the primary editorial source; external discovery fills music/editorial rails.
 (function(){const target=document.getElementById("bestNewMusicGrid");if(!target)return;const watch=new MutationObserver(()=>{const source=document.getElementById("nSongs");if(source&&source.innerHTML.trim())target.innerHTML=source.innerHTML;});const source=document.getElementById("nSongs");if(source)watch.observe(source,{childList:true,subtree:true});})();
