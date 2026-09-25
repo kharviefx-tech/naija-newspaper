@@ -3,3 +3,39 @@
 
 /* Mature editorial identity: Wikipedia-style reference profiles + newspaper cards */
 .brand{display:flex;align-items:center;justify-content:center;gap:12px;text-align:left;letter-spacing:0}.brand-word{font:900 30px/1 Arial,sans-serif;letter-spacing:-1.8px}.brand-word b{font-weight:400}.brand-mark{display:grid;place-items:center;width:48px;height:48px;background:var(--green);color:#fff;border:3px solid #111;font:900 14px/1 Arial,sans-serif;letter-spacing:-1px;box-shadow:4px 4px 0 #111}.footer-brand{justify-content:flex-start}.footer-brand .brand-word{font-size:23px}.footer-brand .brand-mark{width:38px;height:38px;font-size:11px}.person-card{padding:0;display:block;overflow:hidden}.person-photo{background:#e5e5e0;aspect-ratio:4/3;overflow:hidden}.person-photo img{width:100%;height:100%;object-fit:cover;display:block}.person-placeholder{width:100%;height:100%;min-height:170px;display:grid;place-items:center;background:#ecece7;color:#087443;font:900 44px Arial}.person-placeholder.large{min-height:300px;font-size:64px}.person-card-body{padding:14px 14px 16px}.person-card h3{font-size:23px;margin:7px 0 5px}.person-card p{min-height:32px;margin:0 0 4px}.profile-arrow{display:block;margin-top:13px;font:800 11px Arial;color:var(--green);text-transform:uppercase;letter-spacing:.5px}.verified.large{margin:8px 0 4px;font-size:10px}.wiki-profile{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:34px;align-items:start}.wiki-main{min-width:0}.profile-breadcrumb{font:800 10px Arial;color:var(--green);letter-spacing:1.6px;text-transform:uppercase}.profile-name{font-size:clamp(46px,6vw,76px);line-height:.94;margin:7px 0 14px;letter-spacing:-3px}.profile-rule{height:4px;background:#111;margin-bottom:16px}.profile-headline{font:18px/1.55 Arial;color:#555;max-width:780px}.profile-section{padding:25px 0;border-top:1px solid #cfcfc9}.profile-section h2{font-size:30px;margin:0 0 13px;border-bottom:2px solid #111;padding-bottom:7px}.profile-section p,.bio{font:17px/1.75 Georgia,serif;color:#222}.wiki-infobox{background:#f0f0ec;border:1px solid #a9a9a4;padding:10px;position:sticky;top:115px}.infobox-title{font:800 20px/1.1 Arial;text-align:center;background:#dfe9e2;border:1px solid #b7c4bb;padding:11px;margin-bottom:8px}.infobox-photo img{display:block;width:100%;aspect-ratio:1;object-fit:cover;background:#ddd}.infobox-caption{text-align:center;font:11px/1.4 Arial;color:#555;padding:7px 4px 9px}.wiki-infobox dl{margin:0}.wiki-infobox dl>div{display:grid;grid-template-columns:42% 58%;border-top:1px solid #c9c9c4;padding:9px 5px;gap:8px;font:12px/1.35 Arial}.wiki-infobox dt{font-weight:800}.wiki-infobox dd{margin:0}.infobox-links{border-top:1px solid #c9c9c4;margin-top:4px;padding:10px 5px;font:11px Arial}.infobox-links strong{display:block;margin-bottom:7px}.infobox-links a{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#087443;margin:5px 0}.profile-story-list{display:grid;gap:0;border:1px solid #c9c9c4}.profile-story-list a{display:block;background:#fff;padding:13px 15px;border-bottom:1px solid #ddd}.profile-story-list a:last-child{border-bottom:0}.profile-story-list strong{display:block;font:700 17px/1.25 Georgia;margin-top:5px}@media(max-width:800px){.brand-word{font-size:20px;letter-spacing:-1px}.brand-mark{width:34px;height:34px;box-shadow:3px 3px 0 #111;font-size:10px}.wiki-profile{grid-template-columns:1fr}.wiki-infobox{order:-1;position:static}.infobox-photo img{aspect-ratio:4/3}.profile-name{letter-spacing:-1.5px}}
+
+
+/* PUNCH-inspired newspaper architecture — original Naija Newspaper implementation */
+:root{--nn-red:#b40016;--nn-dark:#151515;--nn-paper:#fff;--nn-gray:#666;--nn-line:#d5d5d5}
+body{background:#fff;color:var(--nn-dark)}
+.site-shell,.container{max-width:1280px;margin-inline:auto}
+.top-strip{background:#111;color:#fff;border-bottom:3px solid var(--nn-red)}
+.site-header{background:#fff;border-bottom:1px solid #111}
+.brand-mark{background:var(--nn-red);border-color:#111;box-shadow:4px 4px 0 #111}
+.brand-word{font-family:Georgia,serif;text-transform:uppercase}
+.main-nav{border-top:1px solid #ddd;border-bottom:4px solid #111;background:#fff}
+.main-nav a{font:800 12px Arial,sans-serif;text-transform:uppercase;letter-spacing:.2px}
+.main-nav a:hover,.read-link,.profile-arrow{color:var(--nn-red)}
+.section-title{display:flex;align-items:center;gap:12px;border-bottom:4px solid #111;padding-bottom:8px;margin:30px 0 16px;font:900 25px/1 Georgia,serif;text-transform:uppercase}
+.section-title:after{content:"";height:5px;width:48px;background:var(--nn-red)}
+.lead-grid{border-bottom:1px solid #111;padding-bottom:24px}
+.lead-card{border:0!important;background:#fff!important}
+.lead-card h1{font-family:Georgia,serif;font-weight:900;letter-spacing:-1.5px}
+.story-card{border:0;border-top:1px solid #bbb;border-bottom:1px solid #bbb;background:#fff}
+.story-card h3{font-family:Georgia,serif}
+.story-card:hover{box-shadow:none;transform:none}
+.story-meta{font:800 10px Arial,sans-serif;color:var(--nn-red);text-transform:uppercase;letter-spacing:.6px}
+.trending{background:#f3f3f3;border-block:1px solid #ccc}
+.ad-bar{background:#fafafa;border:1px dashed #aaa;min-height:90px;display:grid;place-items:center;color:#777;font:700 11px Arial}
+.people-grid{gap:1px;background:#ccc;border:1px solid #ccc}
+.person-card{background:#fff}
+.person-card-body{border-top:4px solid var(--nn-red)}
+.person-card h3{font-family:Georgia,serif}
+.wiki-profile{border-top:5px solid #111;padding-top:20px}
+.profile-name{font-family:Georgia,serif}
+.profile-rule{background:var(--nn-red);height:5px}
+.wiki-infobox{border:1px solid #aaa;background:#f7f7f7}
+.infobox-title{background:#e9e9e9;border-color:#bbb;font-family:Georgia,serif}
+.profile-section h2{font-family:Georgia,serif}
+.footer{border-top:6px solid #111;background:#f3f3f3}
+@media(max-width:800px){.main-nav{overflow-x:auto;white-space:nowrap}.main-nav a{font-size:11px}.section-title{font-size:21px}}
