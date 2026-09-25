@@ -217,3 +217,29 @@ body{margin:0;background:var(--nn-paper);color:#151515}
  .profile-section:first-of-type:before{font-size:14px}
  .related-people .people-grid{grid-template-columns:1fr 1fr!important}
 }
+
+/* FINAL NIGERIAN GREEN-WHITE EDITORIAL POLISH */
+:root{--nn-green:#008751;--nn-green-dark:#006b3f;--nn-white:#fff;--nn-ink:#111;--nn-paper:#fbfbf8}
+body{background:var(--nn-paper);color:var(--nn-ink)}
+.topline{background:var(--nn-green-dark);border-bottom:4px solid var(--nn-green)}
+.brand-mark{background:var(--nn-green)!important;color:#fff!important}
+.nav{border-top-color:var(--nn-green)!important}
+.nav a:hover,.advertise{background:var(--nn-green)!important;color:#fff!important}
+.section-kicker,.story-meta,.tag,.read-link,.section-head>a,.profile-arrow{color:var(--nn-green-dark)!important}
+.section-title:after,.profile-rule{background:var(--nn-green)!important}
+.section-head{border-bottom-color:#111}
+.people-section{border-top-color:var(--nn-green);border-bottom-color:#111}
+.person-card-body{border-top-color:var(--nn-green)!important}
+.verified{background:var(--nn-green-dark)!important}
+.profile-story-list a:hover{border-left-color:var(--nn-green)!important}
+.adbar{border-top:4px solid var(--nn-green)}
+.footer{border-top-color:var(--nn-green-dark)}
+.footer-brand .brand-mark{background:var(--nn-green)!important}
+button.primary-btn{background:var(--nn-green);border-color:var(--nn-green-dark)}
+a{color:inherit}
+a:hover{color:var(--nn-green-dark)}
+/* Make all editorial cards visibly actionable */
+.story-card,.person-card,.brief-card,.feature-strip>div{cursor:pointer}
+.story-card a,.person-card a{display:block}
+button,.nav a,.advertise,.read-link,.section-head>a,.profile-story-list a{cursor:pointer}
+@media(max-width:800px){.brand-logo{max-width:260px!important}}
