@@ -220,3 +220,27 @@ async function loadNotJustOkModules(){
 loadNotJustOkModules();
 setInterval(loadNotJustOkModules,10*60*1000);
 
+const NJOK_EXTRA_FEEDS={
+ nArtists:"https://notjustok.com/category/artists/feed/",
+ nCharts:"https://notjustok.com/category/charts/feed/",
+ nEp:"https://notjustok.com/category/songs/ep/feed/",
+ nReviews:"https://notjustok.com/category/album-review/feed/",
+ nCovers:"https://notjustok.com/category/article/cover/feed/",
+ nPodcast:"https://notjustok.com/category/podcast/feed/",
+ nSponsored:"https://notjustok.com/category/sponsored/feed/",
+ nPlaylists:"https://notjustok.com/category/dj-mixtapes/feed/"
+};
+async function loadNotJustOkExtra(){
+ try{
+  const entries=await Promise.all(Object.entries(NJOK_EXTRA_FEEDS).map(async([id,url])=>{
+   const r=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(url),{cache:"no-store"});
+   if(!r.ok) return [id,[]];
+   const d=await r.json(); return [id,(d.items||[]).slice(0,6)];
+  }));
+  const card=item=>'<article class="njok-card">'+(item.thumbnail?'<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow"><img src="'+esc(item.thumbnail)+'" alt="" loading="lazy" onerror="this.remove()"></a>':'')+'<div class="story-meta">NOTJUSTOK · '+esc((item.categories&&item.categories[0])||"EDITORIAL")+'</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"Latest")+'</div></article>';
+  entries.forEach(([id,items])=>{const el=$("#"+id);if(el)el.innerHTML=items.map(card).join("")||'<div class="empty">No items available.</div>';});
+ }catch(e){console.warn("Extended NotJustOk feeds unavailable",e);}
+}
+loadNotJustOkExtra();setInterval(loadNotJustOkExtra,10*60*1000);
+
+
