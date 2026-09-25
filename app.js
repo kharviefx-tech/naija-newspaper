@@ -167,31 +167,32 @@ $("#globalSearch").addEventListener("input",e=>{const q=e.target.value.toLowerCa
 window.addEventListener("hashchange",route);
 $("#dateLine").textContent=new Date().toLocaleDateString("en-NG",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 $("#year").textContent=new Date().getFullYear();
-const LIVE_FEEDS=[
-{name:"PUNCH",url:"https://rss.punchng.com/v1/category/latest_news"},
-{name:"Premium Times",url:"https://www.premiumtimesng.com/feed"},
-{name:"The Guardian Nigeria",url:"https://guardian.ng/feed/"},
-{name:"The Nation",url:"https://thenationonlineng.net/feed/"},
-{name:"Daily Post Nigeria",url:"https://dailypost.ng/feed"},
-{name:"Legit.ng",url:"https://www.legit.ng/rss/all.rss"},
-{name:"BBC News",url:"https://feeds.bbci.co.uk/news/world/africa/rss.xml"}];
-async function loadLiveNews(){
- const grid=$("#liveNewsGrid"),status=$("#liveNewsStatus");
+const PUNCH_FEEDS=[
+"latest_news","featured","videos","metro_plus","columns","opinion","politics","business","health","incase_you_missed_it","interview","sports","interactive","special_feature","entertainment","education","technology","editorial","panorama","sex_and_relationship","healthwise"
+];
+async function loadPunchNews(){
+ const grid=$("#punchGrid"),status=$("#punchStatus");
  try{
-  const results=await Promise.all(LIVE_FEEDS.map(async source=>{
-   const r=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(source.url),{cache:"no-store"});
-   if(!r.ok) throw new Error(source.name);
+  const results=await Promise.all(PUNCH_FEEDS.map(async category=>{
+   const url="https://rss.punchng.com/v1/category/"+category;
+   const r=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(url),{cache:"no-store"});
+   if(!r.ok) throw new Error(category);
    const data=await r.json();
-   return (data.items||[]).slice(0,5).map(item=>({...item,source:source.name}));
+   return (data.items||[]).slice(0,10).map(item=>({...item,punchCategory:category}));
   }));
-  const items=results.flat().sort((a,b)=>new Date(b.pubDate||0)-new Date(a.pubDate||0)).slice(0,30); // live-feed cache refresh
-  if(!items.length) throw new Error("No live headlines");
-  grid.innerHTML=items.map(item=>'<article class="live-news-card"><div class="live-source">'+esc(item.source)+'</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleString("en-NG",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"Latest")+'</div></article>').join("");
-  status.textContent="Updated "+new Date().toLocaleTimeString("en-NG",{hour:"2-digit",minute:"2-digit"});
+  const items=results.flat().sort((a,b)=>new Date(b.pubDate||0)-new Date(a.pubDate||0));
+  const unique=[];const seen=new Set();
+  for(const item of items){const key=item.link||item.title;if(!seen.has(key)){seen.add(key);unique.push(item);}}
+  if(!unique.length) throw new Error("No PUNCH headlines");
+  grid.innerHTML=unique.map((item,i)=>{
+   const image=item.thumbnail||item.enclosure?.link||"";
+   return '<article class="punch-card">'+(image?'<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow"><img src="'+esc(image)+'" alt="" loading="lazy" onerror="this.closest(\'.punch-card-media\')?.classList.add(\'image-missing\');this.remove()"></a>':'')+'<div class="punch-card-body"><div class="live-source">PUNCH · '+esc(String(item.punchCategory||"").replaceAll("_"," ").toUpperCase())+'</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleString("en-NG",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}):"Latest")+'</div></div></article>';
+  }).join("");
+  status.textContent=unique.length+" headlines · Updated "+new Date().toLocaleTimeString("en-NG",{hour:"2-digit",minute:"2-digit"});
  }catch(e){
-  console.warn("Live news feeds unavailable",e);
-  grid.innerHTML='<div class="empty">Live feeds are temporarily unavailable. Published Naija Newspaper stories remain available above.</div>';
+  console.warn("PUNCH feed unavailable",e);
+  grid.innerHTML='<div class="empty">PUNCH live feed is temporarily unavailable. Published Naija Newspaper stories remain available above.</div>';
   status.textContent="Feed unavailable";
  }}
-loadLiveNews();
-setInterval(loadLiveNews,10*60*1000);
+loadPunchNews();
+setInterval(loadPunchNews,10*60*1000);
