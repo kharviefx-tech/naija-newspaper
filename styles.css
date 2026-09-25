@@ -6,34 +6,34 @@
 
 
 /* PUNCH-inspired newspaper architecture — original Naija Newspaper implementation */
-:root{--nn-red:#b40016;--nn-dark:#151515;--nn-paper:#fff;--nn-gray:#666;--nn-line:#d5d5d5}
+:root{--nn-green:#087a3d;--nn-dark:#151515;--nn-paper:#fff;--nn-gray:#666;--nn-line:#d5d5d5}
 body{background:#fff;color:var(--nn-dark)}
 .site-shell,.container{max-width:1280px;margin-inline:auto}
-.top-strip{background:#111;color:#fff;border-bottom:3px solid var(--nn-red)}
+.top-strip{background:#111;color:#fff;border-bottom:3px solid var(--nn-green)}
 .site-header{background:#fff;border-bottom:1px solid #111}
-.brand-mark{background:var(--nn-red);border-color:#111;box-shadow:4px 4px 0 #111}
+.brand-mark{background:var(--nn-green);border-color:#111;box-shadow:4px 4px 0 #111}
 .brand-word{font-family:Georgia,serif;text-transform:uppercase}
 .main-nav{border-top:1px solid #ddd;border-bottom:4px solid #111;background:#fff}
 .main-nav a{font:800 12px Arial,sans-serif;text-transform:uppercase;letter-spacing:.2px}
-.main-nav a:hover,.read-link,.profile-arrow{color:var(--nn-red)}
+.main-nav a:hover,.read-link,.profile-arrow{color:var(--nn-green)}
 .section-title{display:flex;align-items:center;gap:12px;border-bottom:4px solid #111;padding-bottom:8px;margin:30px 0 16px;font:900 25px/1 Georgia,serif;text-transform:uppercase}
-.section-title:after{content:"";height:5px;width:48px;background:var(--nn-red)}
+.section-title:after{content:"";height:5px;width:48px;background:var(--nn-green)}
 .lead-grid{border-bottom:1px solid #111;padding-bottom:24px}
 .lead-card{border:0!important;background:#fff!important}
 .lead-card h1{font-family:Georgia,serif;font-weight:900;letter-spacing:-1.5px}
 .story-card{border:0;border-top:1px solid #bbb;border-bottom:1px solid #bbb;background:#fff}
 .story-card h3{font-family:Georgia,serif}
 .story-card:hover{box-shadow:none;transform:none}
-.story-meta{font:800 10px Arial,sans-serif;color:var(--nn-red);text-transform:uppercase;letter-spacing:.6px}
+.story-meta{font:800 10px Arial,sans-serif;color:var(--nn-green);text-transform:uppercase;letter-spacing:.6px}
 .trending{background:#f3f3f3;border-block:1px solid #ccc}
 .ad-bar{background:#fafafa;border:1px dashed #aaa;min-height:90px;display:grid;place-items:center;color:#777;font:700 11px Arial}
 .people-grid{gap:1px;background:#ccc;border:1px solid #ccc}
 .person-card{background:#fff}
-.person-card-body{border-top:4px solid var(--nn-red)}
+.person-card-body{border-top:4px solid var(--nn-green)}
 .person-card h3{font-family:Georgia,serif}
 .wiki-profile{border-top:5px solid #111;padding-top:20px}
 .profile-name{font-family:Georgia,serif}
-.profile-rule{background:var(--nn-red);height:5px}
+.profile-rule{background:var(--nn-green);height:5px}
 .wiki-infobox{border:1px solid #aaa;background:#f7f7f7}
 .infobox-title{background:#e9e9e9;border-color:#bbb;font-family:Georgia,serif}
 .profile-section h2{font-family:Georgia,serif}
@@ -43,7 +43,7 @@ body{background:#fff;color:var(--nn-dark)}
 
 /* FINAL EDITORIAL REDESIGN — Naija Newspaper / Nigerian broadsheet architecture */
 :root{
-  --nn-red:#b40016;
+  --nn-green:#087a3d;
   --nn-black:#111;
   --nn-paper:#fff;
   --nn-off:#f4f4f1;
@@ -52,32 +52,32 @@ body{background:#fff;color:var(--nn-dark)}
 }
 body{background:var(--nn-paper);color:var(--nn-text);font-family:Georgia,"Times New Roman",serif}
 .wrap{width:min(calc(100% - 34px),1280px)}
-.topline{background:#111;border-bottom:4px solid var(--nn-red)}
+.topline{background:#111;border-bottom:4px solid var(--nn-green)}
 .topin{font-size:10px;text-transform:uppercase;letter-spacing:1.2px}
 .site-head{background:#fff;border-bottom:0;position:relative}
 .masthead{min-height:126px;grid-template-columns:70px 1fr 170px;border-bottom:1px solid #111}
 .brand{gap:13px}
-.brand-mark{width:58px;height:58px;background:var(--nn-red);border:3px solid #111;box-shadow:3px 3px 0 #111;font-family:Georgia,serif;font-size:17px}
+.brand-mark{width:58px;height:58px;background:var(--nn-green);border:3px solid #111;box-shadow:3px 3px 0 #111;font-family:Georgia,serif;font-size:17px}
 .brand-word{font-family:Georgia,serif!important;font-weight:900!important;font-size:37px!important;letter-spacing:-2px!important}
 .brand-word b{font-weight:400}
 .head-actions .icon-btn{font-size:29px}
-.advertise{background:var(--nn-red);border:2px solid #111;padding:10px 12px}
+.advertise{background:var(--nn-green);border:2px solid #111;padding:10px 12px}
 .nav{border-top:5px solid #111;border-bottom:1px solid #aaa;background:#fff}
 .navin{justify-content:flex-start}
 .nav a{padding:13px 15px;border-right:1px solid #ddd;font-size:11px}
 .nav a:first-child{border-left:1px solid #ddd}
-.nav a:hover{background:var(--nn-red);color:#fff}
+.nav a:hover{background:var(--nn-green);color:#fff}
 .hero{padding:22px 0 16px}
-.section-kicker,.story-meta,.tag{color:var(--nn-red);font-weight:900}
+.section-kicker,.story-meta,.tag{color:var(--nn-green);font-weight:900}
 .hero-grid{grid-template-columns:minmax(0,2.35fr) minmax(280px,.9fr);gap:0;border-top:4px solid #111;border-bottom:1px solid #111}
 .lead-card{padding:0 24px 22px 0!important;border-right:1px solid #aaa!important}
 .lead-card h1{font-size:clamp(42px,5.2vw,72px);line-height:.91;margin:12px 0 14px;letter-spacing:-3px}
 .hero-story-img,.image-placeholder{height:350px;margin-bottom:16px}
-.image-placeholder{background:linear-gradient(135deg,#111 0 72%,var(--nn-red) 72%);font-size:13px;letter-spacing:3px}
+.image-placeholder{background:linear-gradient(135deg,#111 0 72%,var(--nn-green) 72%);font-size:13px;letter-spacing:3px}
 .brief-card{border:0!important;padding:0 0 0 22px!important}
 .brief-card .section-title{margin:0 0 2px}
 .section-title{font-family:Georgia,serif;font-size:24px;border-bottom:4px solid #111;text-transform:uppercase;padding:9px 0}
-.section-title:after{background:var(--nn-red)}
+.section-title:after{background:var(--nn-green)}
 .list article{padding:13px 0;border-bottom:1px solid #bbb}
 .list h4{font-size:19px;margin:4px 0}
 .adbar{margin:0 auto;padding:15px 0;border-top:0;border-bottom:1px solid #999;background:#fafafa}
@@ -93,21 +93,21 @@ body{background:var(--nn-paper);color:var(--nn-text);font-family:Georgia,"Times 
 .people-grid{grid-template-columns:repeat(4,1fr);gap:0;background:#aaa;border:0}
 .person-card{border-right:1px solid #aaa;border-bottom:1px solid #aaa}
 .person-photo{aspect-ratio:1/1.08}
-.person-card-body{border-top:5px solid var(--nn-red);padding:13px 14px 17px}
+.person-card-body{border-top:5px solid var(--nn-green);padding:13px 14px 17px}
 .person-card h3{font-size:24px}
-.profile-arrow,.read-link{color:var(--nn-red)}
+.profile-arrow,.read-link{color:var(--nn-green)}
 .verified{background:#111;color:#fff}
 .wiki-profile{grid-template-columns:minmax(0,1fr) 340px;border-top:5px solid #111;padding-top:22px}
 .profile-name{font-family:Georgia,serif;font-size:clamp(48px,6vw,78px)}
-.profile-rule{background:var(--nn-red)}
+.profile-rule{background:var(--nn-green)}
 .wiki-infobox{background:#f1f1ee;border:1px solid #888;padding:8px}
 .infobox-title{background:#ddd;border:1px solid #aaa;font-family:Georgia,serif;font-size:21px}
 .wiki-infobox dl>div{border-top:1px solid #c1c1bd}
 .profile-section h2{font-family:Georgia,serif;font-size:29px;border-bottom:3px solid #111}
 .profile-story-list{border:1px solid #aaa}
-.profile-story-list a:hover{border-left:5px solid var(--nn-red)}
+.profile-story-list a:hover{border-left:5px solid var(--nn-green)}
 .footer{border-top:7px solid #111;background:#111;color:#fff}
-.footer-brand .brand-mark{background:var(--nn-red)}
+.footer-brand .brand-mark{background:var(--nn-green)}
 .footer-bottom{border-top:1px solid #555}
 @media(max-width:800px){
  .wrap{width:min(calc(100% - 20px),1280px)}
@@ -132,7 +132,7 @@ body{background:var(--nn-paper);color:var(--nn-text);font-family:Georgia,"Times 
 
 /* MASTER EDITORIAL SYSTEM — original Naija Newspaper, broadsheet + reference encyclopedia */
 :root{
- --nn-red:#b3131b;--nn-black:#111;--nn-paper:#fff;--nn-cream:#f6f5f0;
+ --nn-green:#b3131b;--nn-black:#111;--nn-paper:#fff;--nn-cream:#f6f5f0;
  --nn-rule:#b8b8b2;--nn-muted:#666;--nn-blue:#2b4f72;
 }
 *{box-sizing:border-box}
