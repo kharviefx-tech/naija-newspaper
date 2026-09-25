@@ -23,7 +23,7 @@
 <header class="admin-head"><div><div class="eyebrow">NAIJA NEWSPAPER</div><strong>EDITORIAL CONTROL ROOM</strong></div><div class="head-actions"><a href="./" target="_blank">View site ↗</a><button id="logoutBtn">Sign out</button></div></header>
 <div class="admin-shell">
 <aside class="sidebar">
-<button data-tab="overview" class="tab active">Overview</button>
+<button data-tab="overview" class="tab active">Overview</button><button data-tab="homepage" class="tab">Homepage CMS</button>
 <button data-tab="stories" class="tab">Stories</button>
 <button data-tab="people" class="tab">People</button>
 <button data-tab="submissions" class="tab">Submissions</button>
@@ -34,6 +34,8 @@
 </aside>
 <main class="workspace">
 <section id="overview" class="panel active"><div class="panel-head"><div><div class="eyebrow">DASHBOARD</div><h1>Overview</h1></div><button class="secondary" id="refreshBtn">Refresh</button></div><div id="stats" class="stats"></div><div class="two-col"><div class="card"><h2>Editorial queue</h2><div id="queue"></div></div><div class="card"><h2>Quick actions</h2><div class="quick"><button data-open="stories">+ New story</button><button data-open="people">+ New profile</button><button data-open="media">Upload media</button><button data-open="ads">Manage ads</button></div></div></div></section>
+
+<section id="homepage" class="panel"><div class="panel-head"><div><div class="eyebrow">FULL CMS</div><h1>Homepage</h1><p>Control homepage copy, navigation, featured story, section order and visibility without editing code.</p></div><button class="primary" id="saveHomepageBtn">Save homepage</button></div><div class="card"><h2>Global homepage settings</h2><div id="homepageGlobalForm" class="settings-grid"></div></div><div class="card"><div class="panel-head"><div><h2>Homepage sections</h2><p>Reorder, rename, hide or show sections and control how many stories they display.</p></div><button class="secondary" id="addSectionBtn">Add section</button></div><div id="homepageSectionsForm" class="cms-sections"></div><div id="homepageMsg" class="msg"></div></div></section>
 
 <section id="stories" class="panel"><div class="panel-head"><div><div class="eyebrow">EDITORIAL</div><h1>Stories</h1></div><button class="primary" id="newStoryBtn">New story</button></div><div id="storyEditor" class="card hidden"></div><div class="table-wrap"><table><thead><tr><th>Title</th><th>Type</th><th>Status</th><th>Published</th><th>Actions</th></tr></thead><tbody id="storiesTable"></tbody></table></div></section>
 
