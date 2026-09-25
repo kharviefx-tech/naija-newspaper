@@ -18,3 +18,12 @@
 @media(max-width:900px){.masthead{grid-template-columns:60px 1fr 160px}.hero-main,.section-columns,.franchise-grid{grid-template-columns:1fr}.music-grid{grid-template-columns:repeat(3,1fr)}.latest-grid,.four-grid{grid-template-columns:repeat(2,1fr)}.rank-grid{grid-template-columns:repeat(3,1fr)}.hero-rail{grid-template-columns:1fr}.rail-items{grid-template-columns:repeat(3,1fr)}.footer-top{grid-template-columns:2fr 1fr 1fr}}
 @media(max-width:620px){.utility{display:none}.masthead{height:64px;grid-template-columns:45px 1fr 55px}.brand img{width:145px}.mast-actions .search-trigger{font-size:0}.search-trigger span{font-size:22px}.advertise{display:none}.primary-nav{display:none}.hot-inner{grid-template-columns:auto 1fr;gap:10px}.latest-link{display:none}.hot-links{gap:18px}.home-hero{padding-top:16px}.hero-placeholder,.hero-feature img{height:225px}.hero-feature h1{font-size:30px}.hero-rail{display:block}.rail-items{grid-template-columns:1fr 1fr}.section{padding-top:34px}.section-head h2{font-size:23px}.three-grid,.latest-grid,.four-grid,.music-grid{grid-template-columns:1fr 1fr}.rank-list{grid-template-columns:1fr}.rank-grid{grid-template-columns:1fr 1fr}.news-card img,.music-grid .njok-card img{height:135px}.advertise-panel{display:block}.advertise-panel>a{display:inline-block;margin-top:10px}.footer-top{grid-template-columns:1fr 1fr}.footer-top>div:first-child{grid-column:1/-1}}
 @media(max-width:390px){.three-grid,.latest-grid,.four-grid,.music-grid,.rank-grid{grid-template-columns:1fr}}
+
+
+/* Editorial module polish */
+.editorial-note{padding:24px;border:1px solid rgba(0,0,0,.12);background:linear-gradient(135deg,#fff,#f4f8f5);border-radius:14px;min-height:120px;display:flex;flex-direction:column;justify-content:center}
+.editorial-note strong{font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.editorial-note p{margin:8px 0 0;color:#56615b;line-height:1.65}
+.news-card h3 a,.njok-card h3 a,.paper-list-item h3 a{color:inherit;text-decoration:none}
+.news-card h3 a:hover,.njok-card h3 a:hover,.paper-list-item h3 a:hover{color:#087a43}
+.section{scroll-margin-top:150px}
