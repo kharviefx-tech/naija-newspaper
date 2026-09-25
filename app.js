@@ -21,7 +21,7 @@ async function load(){
   try{
     const [p,n,c]=await Promise.all([
       db.from("people_profiles").select("*").eq("is_published",true).order("display_name"),
-      db.from("posts").select("*").eq("is_published",true).order("published_at",{ascending:false}).limit(30),
+      db.from("posts").select("*").eq("is_published",true).order("published_at",{ascending:false}).limit(100),
       db.from("post_categories").select("*").eq("is_active",true).order("sort_order")
     ]);
     if(p.error||n.error||c.error) throw p.error||n.error||c.error;
@@ -59,7 +59,7 @@ function renderBusinessLegends(){
 
 function renderPosts(items){
   const html=items.length?items.map(storyCard).join(""):'<div class="empty">No published stories yet. Your editorial desk can publish the first story.</div>';
-  $("#newsGrid").innerHTML=html; $("#allNewsGrid").innerHTML=html;
+  $("#newsGrid").innerHTML=items.slice(0,12).map(storyCard).join("")||"<div class=\"empty\">No published stories yet.</div>"; $("#allNewsGrid").innerHTML=html; const celebrity=items.filter(x=>String(x.category_id||"")==="f08e1fe3-76c6-47d9-9dd1-bd062b5ae326").slice(0,100); $("#celebrityGrid").innerHTML=celebrity.map(storyCard).join("")||"<div class=\"empty\">No celebrity profiles yet.</div>";
 }
 function personCard(x){
   return '<a class="person-card" href="#person/'+encodeURIComponent(x.slug)+'"><div class="person-photo">'+(x.profile_image_url?'<img src="'+esc(x.profile_image_url)+'" alt="'+esc(x.display_name)+'" loading="lazy">':'<div class="person-placeholder">NN</div>')+'</div><div class="person-card-body"><div class="story-meta">PEOPLE · '+esc(x.person_type||"PROFILE")+'</div><h3>'+esc(x.display_name)+'</h3><p>'+esc(x.headline||x.category||"Public profile")+'</p>'+(x.is_verified?'<span class="verified">✓ Verified by Naija Newspaper</span>':"")+'<span class="profile-arrow">View profile →</span></div></a>';
