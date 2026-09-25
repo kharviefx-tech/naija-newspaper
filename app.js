@@ -45,7 +45,7 @@ function personCard(x){
   return '<a class="person-card" href="#person/'+encodeURIComponent(x.slug)+'"><div class="person-photo">'+(x.profile_image_url?'<img src="'+esc(x.profile_image_url)+'" alt="'+esc(x.display_name)+'" loading="lazy">':'<div class="person-placeholder">NN</div>')+'</div><div class="person-card-body"><div class="story-meta">PEOPLE · '+esc(x.person_type||"PROFILE")+'</div><h3>'+esc(x.display_name)+'</h3><p>'+esc(x.headline||x.category||"Public profile")+'</p>'+(x.is_verified?'<span class="verified">✓ Verified by Naija Newspaper</span>':"")+'<span class="profile-arrow">View profile →</span></div></a>';
 }
 function renderPeople(items){
-  const html=items.length?items.slice(0,12).map(personCard).join(""):'<div class="empty">No published profiles yet. Submit a person to start the directory.</div>';
+  const html=items.length?items.slice(0,12).map(personCard).join(""):'<div class="empty">No published profiles yet. The editorial desk is building the directory.</div>';
   $("#peopleGrid").innerHTML=html; $("#allPeopleGrid").innerHTML=items.map(personCard).join("")||html;
 }
 function renderTrending(items){
@@ -105,7 +105,7 @@ async function showPerson(slug){
   '<section class="profile-section"><h2>Career and work</h2><p>Naija Newspaper maintains this reference profile to document publicly available information, career milestones, notable work and published coverage.</p></section>'+
   (stories.length?'<section class="profile-section"><h2>Naija Newspaper coverage</h2><div class="profile-story-list">'+stories.map(s=>'<a href="#story/'+encodeURIComponent(s.slug||s.id)+'"><span class="story-meta">'+esc(s.content_type||"STORY")+' · '+esc(date(s.published_at))+'</span><strong>'+esc(s.title)+'</strong></a>').join("")+'</div></section>':"")+
   '<section class="profile-section"><h2>Official links</h2><div class="link-grid">'+linksHtml+'</div></section>'+
-  '<section class="profile-section"><h2>References and updates</h2><p>This is an editorial reference page, not a Wikipedia page and not a platform verification badge. Information can be updated through the profile claim and editorial review process.</p><p><a class="read-link" href="#claim">Claim or request an update →</a></p></section></div>'+
+  '<section class="profile-section"><h2>References and updates</h2><p>This is an editorial reference page, not a Wikipedia page and not a platform verification badge. Information is maintained through the Naija Newspaper editorial desk.</p><p><a class="read-link" href="#claim">Claim or request an update →</a></p></section></div>'+
   '<aside class="wiki-infobox"><div class="infobox-title">'+esc(x.display_name)+'</div><div class="infobox-photo">'+(x.profile_image_url?'<img src="'+esc(x.profile_image_url)+'" alt="'+esc(x.display_name)+'">':'<div class="person-placeholder large">NN</div>')+'</div><div class="infobox-caption">'+esc(x.headline||x.category||"People profile")+'</div><dl>'+facts.map(v=>'<div><dt>'+esc(v[0])+'</dt><dd>'+esc(v[1])+'</dd></div>').join("")+'</dl>'+(sameAsLinks?'<div class="infobox-links"><strong>External profiles</strong>'+sameAsLinks+'</div>':"")+'</aside></div>';
   setMeta((x.meta_title||x.display_name)+" — Naija Newspaper",x.meta_description||x.short_bio||x.headline||"People profile on Naija Newspaper",canonical,"Person",{name:x.display_name,description:x.bio||x.short_bio,image:x.profile_image_url,url:canonical,sameAs:sameAs});
   window.scrollTo({top:document.querySelector("#profile").offsetTop-90,behavior:"smooth"});
@@ -117,24 +117,6 @@ function route(){
   $("#profile").classList.add("hidden");
   if(!h||h==="#home") setMeta("Naija Newspaper — News, People, Culture & Stories","Naija Newspaper is a Nigerian digital publication covering news, people, creators, entertainment, music, business, culture and events.","https://kharviefx-tech.github.io/naija-newspaper/","NewsMediaOrganization",{name:"Naija Newspaper",url:"https://kharviefx-tech.github.io/naija-newspaper/"});
 }
-function formValue(form,name){return (form.elements[name]?.value||"").trim();}
-async function submitProfile(e){
-  e.preventDefault();const f=e.currentTarget;const msg=$("#profileSubmitMsg");
-  const payload={name:formValue(f,"name"),profession:formValue(f,"profession"),category:formValue(f,"category"),bio:formValue(f,"bio"),website_url:formValue(f,"website_url")||null,photo_url:formValue(f,"photo_url")||null,notes:formValue(f,"notes")||null,social_links:{}};
-  if(!payload.name||!payload.bio){msg.textContent="Please provide the name and biography.";return;}
-  const r=await db.from("profile_submissions").insert(payload);
-  msg.textContent=r.error?"Submission could not be sent. Please try again.":"Submitted successfully. Our editorial team will review it.";
-  if(!r.error)f.reset();
-}
-async function submitClaim(e){
-  e.preventDefault();const f=e.currentTarget,msg=$("#claimMsg");
-  const name=formValue(f,"claimant_name"),email=formValue(f,"claimant_email"),slug=formValue(f,"profile_slug");
-  const p=people.find(x=>x.slug===slug);
-  if(!p){msg.textContent="We could not find that published profile. Enter the exact profile slug.";return;}
-  const r=await db.from("profile_claims").insert({person_id:p.id,claimant_name:name,claimant_email:email,relationship:formValue(f,"relationship"),proof_url:formValue(f,"proof_url")||null,proof_notes:formValue(f,"proof_notes")||null});
-  msg.textContent=r.error?"Claim could not be sent. Please try again.":"Claim submitted. The editorial team will review the proof and contact you if needed.";
-  if(!r.error)f.reset();
-}
 $("#peopleSearch").addEventListener("input",filterPeople);
 $("#peopleType").addEventListener("change",filterPeople);
 function setMenu(open){$("#menuDrawer").classList.toggle("open",open);$("#drawerBackdrop").classList.toggle("open",open);$("#menuDrawer").setAttribute("aria-hidden",String(!open));$("#drawerBackdrop").setAttribute("aria-hidden",String(!open));$("#menuBtn").setAttribute("aria-expanded",String(open));document.body.classList.toggle("drawer-open",open)}
@@ -145,8 +127,6 @@ document.querySelectorAll("#menuDrawer a").forEach(a=>a.addEventListener("click"
 $("#searchBtn").addEventListener("click",()=>$("#searchPanel").classList.add("open"));
 $("#closeSearch").addEventListener("click",()=>$("#searchPanel").classList.remove("open"));
 $("#globalSearch").addEventListener("input",e=>{const q=e.target.value.toLowerCase().trim();const out=[...posts.map(x=>({type:"story",item:x})),...people.map(x=>({type:"person",item:x}))].filter(v=>{const x=v.item;return [x.title,x.display_name,x.headline,x.category,x.person_type].join(" ").toLowerCase().includes(q)}).slice(0,10).map(v=>v.type==="story"?'<div class="result"><div class="story-meta">STORY · '+esc(date(v.item.published_at))+'</div><h3>'+esc(v.item.title)+'</h3><a class="read-link" href="#story/'+encodeURIComponent(v.item.slug||v.item.id)+'">Open →</a></div>':'<div class="result"><div class="story-meta">PEOPLE PROFILE</div><h3>'+esc(v.item.display_name)+'</h3><a class="read-link" href="#person/'+encodeURIComponent(v.item.slug)+'">Open →</a></div>').join("");$("#searchResults").innerHTML=q?out||'<div class="empty">No matching results.</div>':""});
-$("#profileForm").addEventListener("submit",submitProfile);
-$("#claimForm").addEventListener("submit",submitClaim);
 window.addEventListener("hashchange",route);
 $("#dateLine").textContent=new Date().toLocaleDateString("en-NG",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 $("#year").textContent=new Date().getFullYear();
