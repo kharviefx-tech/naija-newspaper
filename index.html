@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Naija Newspaper — News, People, Culture & Stories</title>
+<meta name="description" content="Naija Newspaper is a Nigerian digital publication covering news, people, creators, entertainment, music, business, culture and events.">
+<meta name="theme-color" content="#111111">
+<link rel="canonical" href="https://kharviefx-tech.github.io/naija-newspaper/">
+<link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"NewsMediaOrganization","name":"Naija Newspaper","url":"https://kharviefx-tech.github.io/naija-newspaper/","description":"News, people, culture and stories."}</script>
+</head>
+<body>
+<div class="topline"><div class="wrap topin"><span>Naija Newspaper</span><span id="dateLine"></span></div></div>
+<header class="site-head">
+  <div class="wrap masthead">
+    <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+    <a class="brand" href="./">NAIJA <b>NEWSPAPER</b></a>
+    <div class="head-actions">
+      <button id="searchBtn" class="icon-btn" aria-label="Search">⌕</button>
+      <a class="advertise" href="#advertise">Advertise</a>
+    </div>
+  </div>
+  <nav id="mainNav" class="nav"><div class="wrap navin">
+    <a href="#home">Home</a><a href="#news">News</a><a href="#entertainment">Entertainment</a><a href="#people">People</a><a href="#creators">Creators</a><a href="#music">Music</a><a href="#business">Business</a><a href="#sports">Sports</a><a href="#technology">Technology</a><a href="#culture">Culture</a><a href="#interviews">Interviews</a><a href="#events">Events</a>
+  </div></nav>
+</header>
+
+<main id="app">
+<section id="home" class="wrap hero">
+  <div class="section-kicker">THE DAILY BRIEF</div>
+  <div class="hero-grid">
+    <article class="lead-card"><div class="image-placeholder">TOP STORY</div><div class="story-meta">LATEST · NAIJA NEWSPAPER</div><h1>News, people and stories shaping Nigeria.</h1><p>Naija Newspaper brings reporting, profiles and public-interest stories together in one searchable publication.</p><a class="read-link" href="#news">Explore the latest →</a></article>
+    <aside class="brief-card"><div class="section-title">TRENDING</div><div id="trendingList" class="list">Loading…</div></aside>
+  </div>
+</section>
+
+<section class="adbar wrap" id="advertise"><span>ADVERTISEMENT</span><div>Premium advertising space</div><a href="mailto:avannahvictor3@gmail.com?subject=Naija%20Newspaper%20Advertising">Advertise with us →</a></section>
+
+<section id="news" class="wrap section"><div class="section-head"><div><div class="section-kicker">LATEST</div><h2>News</h2></div><a href="#all-news">View all →</a></div><div id="newsGrid" class="story-grid"><div class="loading">Loading published stories…</div></div></section>
+
+<section id="people" class="wrap section people-section"><div class="section-head"><div><div class="section-kicker">REFERENCE DIRECTORY</div><h2>People</h2></div><a href="#all-people">Browse directory →</a></div><div class="people-tools"><input id="peopleSearch" placeholder="Search people, artists, creators…" autocomplete="off"><select id="peopleType"><option value="">All types</option><option>artist</option><option>creator</option><option>influencer</option><option>actor</option><option>athlete</option><option>entrepreneur</option><option>podcaster</option><option>comedian</option><option>journalist</option><option>public_figure</option><option>professional</option></select></div><div id="peopleGrid" class="people-grid"><div class="loading">Loading profiles…</div></div></section>
+
+<section id="entertainment" class="wrap section"><div class="section-head"><div><div class="section-kicker">ENTERTAINMENT</div><h2>Entertainment & Music</h2></div></div><div class="feature-strip"><div><span class="tag">MUSIC</span><h3>Artists, releases, interviews and the culture around the sound.</h3></div><div><span class="tag">PEOPLE</span><h3>Discover public profiles and the work behind the names.</h3></div><div><span class="tag">EVENTS</span><h3>Find concerts, launches, shows and public events.</h3></div></div></section>
+
+<section id="all-news" class="wrap section"><div class="section-head"><div><div class="section-kicker">PUBLICATION</div><h2>Stories</h2></div></div><div id="allNewsGrid" class="story-grid"></div></section>
+
+<section id="all-people" class="wrap section"><div class="section-head"><div><div class="section-kicker">PEOPLE DIRECTORY</div><h2>Profiles</h2></div></div><div id="allPeopleGrid" class="people-grid"></div></section>
+
+<section id="profile" class="wrap section profile-view hidden"></section>
+</main>
+
+<footer class="footer"><div class="wrap footer-grid">
+<div><div class="brand footer-brand">NAIJA <b>NEWSPAPER</b></div><p>News, people, culture and stories.</p></div>
+<div><h4>Publication</h4><a href="#news">News</a><a href="#people">People</a><a href="#all-news">Stories</a><a href="#advertise">Advertising</a></div>
+<div><h4>Editorial</h4><a href="#about">About</a><a href="#submit">Submit a story</a><a href="#claim">Claim a profile</a><a href="#contact">Contact</a></div>
+<div><h4>Policies</h4><a href="#privacy">Privacy</a><a href="#terms">Terms</a><a href="#corrections">Corrections</a></div>
+</div><div class="wrap footer-bottom">© <span id="year"></span> Naija Newspaper. All rights reserved.</div></footer>
+
+<div id="searchPanel" class="search-panel" aria-hidden="true"><div class="wrap"><button id="closeSearch" class="close">×</button><input id="globalSearch" placeholder="Search Naija Newspaper…" autofocus><div id="searchResults"></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+</body>
+</html>
