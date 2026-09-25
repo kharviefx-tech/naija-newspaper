@@ -244,3 +244,6 @@ async function loadNotJustOkExtra(){
 loadNotJustOkExtra();setInterval(loadNotJustOkExtra,10*60*1000);
 
 
+
+// Mirror the music discovery rail into the Best New Music module.
+(function(){const target=document.getElementById("bestNewMusicGrid");if(!target)return;const watch=new MutationObserver(()=>{const source=document.getElementById("nSongs");if(source&&source.innerHTML.trim())target.innerHTML=source.innerHTML;});const source=document.getElementById("nSongs");if(source)watch.observe(source,{childList:true,subtree:true});})();
