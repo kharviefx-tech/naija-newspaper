@@ -559,3 +559,17 @@ body,button,input,select,textarea{font-synthesis:none}
 .legends-grid .person-card{grid-column:span 1}
 @media(max-width:900px){.legends-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.legends-grid .story-card:first-child{grid-column:span 2}}
 @media(max-width:600px){.legends-intro{grid-template-columns:1fr;gap:14px;padding:18px}.legends-grid{grid-template-columns:1fr}.legends-grid .story-card:first-child{grid-column:auto}.legends-intro h3{font-size:27px}}
+
+/* PUNCH-INSPIRED NEWSPAPER GRID — original Naija Newspaper implementation */
+.main-nav{background:#111;border-top:1px solid #333;border-bottom:4px solid var(--nn-green);overflow-x:auto}
+.nav-inner{display:flex;align-items:center;gap:0;min-height:48px;white-space:nowrap}
+.nav-inner a{color:#fff!important;text-decoration:none;padding:15px 14px;font:700 13px/1 Arial,sans-serif;text-transform:uppercase;border-right:1px solid #333}
+.nav-inner a:hover,.nav-inner a:focus{background:var(--nn-green);color:#fff!important}
+.breaking-bar{border-bottom:1px solid #bbb;background:#fff}
+.breaking-in{display:grid;grid-template-columns:auto 1fr auto;align-items:center;min-height:38px}
+.breaking-in strong{background:var(--nn-green);color:#fff;padding:11px 13px;font-size:12px}
+.breaking-track{display:flex;gap:28px;overflow:hidden;padding:0 16px;white-space:nowrap}
+.breaking-track span{font-size:13px;font-weight:700}
+.breaking-in>a{font-size:12px;font-weight:800;color:#111;text-decoration:none;padding-right:10px}
+.section{scroll-margin-top:125px}
+@media(max-width:700px){.breaking-in{grid-template-columns:auto 1fr}.breaking-in>a{display:none}.nav-inner a{padding:14px 11px;font-size:11px}}
