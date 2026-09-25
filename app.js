@@ -113,6 +113,7 @@ function renderPosts(items){
   if($("#latestWidget")) $("#latestWidget").innerHTML=newspaperWidget(items.slice(0,5));
   if($("#topWidget")) $("#topWidget").innerHTML=newspaperWidget(items.slice(5,10).length?items.slice(5,10):items.slice(0,5));
   const ids={business:CATEGORY_IDS.business,sports:CATEGORY_IDS.sports,technology:CATEGORY_IDS.technology,culture:CATEGORY_IDS.culture,interviews:CATEGORY_IDS.interviews,events:CATEGORY_IDS.events};
+  const newsBottom=$("#newsWidget"); if(newsBottom) newsBottom.innerHTML=newspaperWidget(items.filter(x=>String(x.category_id||"")===CATEGORY_IDS.news).slice(0,5));
   Object.entries(ids).forEach(([name,id])=>{const el=$("#"+name+"Widget");if(el)el.innerHTML=newspaperWidget(items.filter(x=>String(x.category_id||"")===id).slice(0,5));});
 }
 function personCard(x){
