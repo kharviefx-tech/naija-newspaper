@@ -452,3 +452,98 @@ footer a{color:#fff}
  .live-news-card{grid-template-columns:42% 58%}
  .brand-logo{max-height:48px!important}
 }
+
+
+/* FORTUNE-STYLE EDITORIAL SYSTEM — original Naija Newspaper implementation; identity and green/white palette preserved */
+:root{--nn-green:#087a3d;--nn-green-dark:#075a2d;--nn-black:#111;--nn-paper:#fff;--nn-soft:#f5f5f2;--nn-rule:#bdbdb8;--nn-text:#161616}
+body{background:var(--nn-paper);color:var(--nn-text);font-family:Arial,Helvetica,sans-serif}
+body,button,input,select,textarea{font-synthesis:none}
+.wrap{width:min(calc(100% - 48px),1320px)}
+.topline{height:34px;background:var(--nn-black);border-bottom:3px solid var(--nn-green)}
+.topin{height:34px;align-items:center;padding:0;font-size:10px;letter-spacing:1.3px}
+.site-head{background:#fff;position:sticky;top:0;z-index:100;border-bottom:1px solid #111}
+.masthead{min-height:108px;grid-template-columns:56px minmax(0,1fr) 170px;border-bottom:1px solid #111}
+.brand{justify-content:flex-start;min-width:0}
+.brand-logo{display:block;width:min(100%,390px);max-height:78px;object-fit:contain;object-position:left center}
+.head-actions{gap:10px}
+.advertise{background:var(--nn-green);border:1px solid #111;padding:12px 14px}
+.nav{display:block;border-top:4px solid #111;border-bottom:1px solid #aaa;background:#fff}
+.navin{justify-content:flex-start;overflow-x:auto}
+.nav a{font-size:10px;letter-spacing:.6px;padding:12px 14px;border-right:1px solid #ddd}
+.nav a:hover{background:var(--nn-green);color:#fff}
+.breaking-bar{background:var(--nn-green);color:#fff;border-bottom:1px solid #111}
+.breaking-in{min-height:38px;display:grid;grid-template-columns:90px minmax(0,1fr) 90px;align-items:center;padding:0}
+.breaking-in strong{font:900 10px Arial;letter-spacing:1.3px;padding-left:10px}
+.breaking-track{overflow:hidden;white-space:nowrap;font:700 11px Arial}
+.breaking-track span{display:inline-block;margin-right:60px}
+.breaking-in>a{font:900 10px Arial;text-align:right;padding-right:10px}
+.hero{padding:28px 0 16px}
+.section-kicker{font:900 10px Arial;letter-spacing:1.8px;color:var(--nn-green)}
+.hero-grid{grid-template-columns:minmax(0,2fr) minmax(300px,.95fr);gap:0;border-top:5px solid #111;border-bottom:1px solid #111;margin-top:8px}
+.lead-card{padding:0 28px 24px 0!important;border:0!important;border-right:1px solid #aaa!important}
+.hero-story-img,.image-placeholder{height:390px;margin:0 0 18px;width:100%}
+.lead-card h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(42px,5.2vw,76px);line-height:.9;letter-spacing:-3px;margin:0 0 15px;max-width:1000px}
+.lead-card p{font:16px/1.55 Arial;max-width:760px;color:#444}
+.brief-card{padding:0 0 0 24px!important;border:0!important}
+.brief-card .section-title{margin:0;padding:11px 0 9px;border-bottom:4px solid #111;font-size:23px}
+.list article{padding:14px 0;border-bottom:1px solid #bbb}
+.list h4{font-family:Georgia,serif;font-size:19px;line-height:1.12;margin:5px 0}
+.adbar{margin:0 auto;background:var(--nn-soft);border-top:0;border-bottom:1px solid #999;padding:14px 12px}
+.section{padding:46px 0}
+.section-head{border-bottom:5px solid #111;margin-bottom:15px;padding-bottom:8px}
+.section-head h2{font-family:Georgia,serif;font-size:36px;letter-spacing:-1px}
+.story-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:0;background:#111;border:1px solid #111}
+.story-card{border:0;border-right:1px solid #111;border-bottom:1px solid #111;background:#fff}
+.story-card .story-img{height:215px}
+.story-body{padding:15px 17px 19px}
+.story-card h3{font-family:Georgia,serif;font-size:24px;line-height:1.03;letter-spacing:-.4px;margin:8px 0}
+.story-card p{font:13px/1.45 Arial;color:#555}
+.live-news-section{border-top:1px solid #111}
+.live-news-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid #111;border-left:1px solid #111}
+.live-news-card{position:relative;background:#fff;border-right:1px solid #111;border-bottom:1px solid #111;padding:18px 18px 20px;min-height:180px}
+.live-news-card h3{font-family:Georgia,serif;font-size:21px;line-height:1.08;margin:9px 0 30px}
+.live-source{font:900 9px Arial;color:var(--nn-green);letter-spacing:1.3px;text-transform:uppercase}
+.live-time{position:absolute;bottom:15px;font:10px Arial;color:#777}
+.people-section{background:var(--nn-soft);border-top:5px solid #111;border-bottom:5px solid #111;padding:30px 24px}
+.people-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:0;background:#aaa;border:1px solid #aaa}
+.person-card{border:0;border-right:1px solid #aaa;border-bottom:1px solid #aaa}
+.person-photo{aspect-ratio:1/1.05}
+.person-card-body{border-top:5px solid var(--nn-green);padding:13px 14px 17px}
+.person-card h3{font-family:Georgia,serif;font-size:23px}
+.feature-strip{grid-template-columns:repeat(3,1fr);gap:0;border:1px solid #111;background:#111}
+.feature-strip>div{border-right:1px solid #111;min-height:190px}
+.feature-strip h3{font-family:Georgia,serif;font-size:27px}
+.footer{border-top:7px solid #111}
+/* clean mobile: single-column editorial rhythm, no squeezed desktop text */
+@media(max-width:800px){
+ .wrap{width:calc(100% - 20px)}
+ .topline{height:30px}.topin{height:30px}
+ .masthead{min-height:74px;grid-template-columns:42px minmax(0,1fr) 42px;padding:7px 0}
+ .brand{justify-content:center}.brand-logo{width:100%;max-width:245px;max-height:56px;object-position:center}
+ .head-actions{justify-content:flex-end}.advertise{display:none}
+ .nav{overflow:hidden}.navin{justify-content:flex-start;overflow-x:auto}.nav a{padding:10px 11px;font-size:9px}
+ .breaking-in{grid-template-columns:72px minmax(0,1fr);min-height:36px}.breaking-in>a{display:none}.breaking-track{font-size:10px}
+ .hero{padding-top:18px}.hero-grid{display:block;border-top:4px solid #111}
+ .lead-card{padding:0 0 20px!important;border-right:0!important}
+ .hero-story-img,.image-placeholder{height:235px;margin-bottom:13px}
+ .lead-card h1{font-size:38px;line-height:.92;letter-spacing:-1.8px}
+ .lead-card p{font-size:14px}
+ .brief-card{padding:14px 0 0!important;border-top:1px solid #aaa!important}
+ .brief-card .section-title{font-size:19px}
+ .section{padding:32px 0}.section-head h2{font-size:30px}
+ .story-grid{grid-template-columns:1fr 1fr}
+ .story-card .story-img{height:150px}.story-body{padding:10px}
+ .story-card h3{font-size:18px}.story-card p{font-size:11px}
+ .live-news-grid{grid-template-columns:1fr}
+ .live-news-card{min-height:0;padding:14px 12px 18px}.live-news-card h3{font-size:18px;margin-bottom:22px}
+ .people-section{padding:22px 10px}.people-grid{grid-template-columns:1fr 1fr}.person-card h3{font-size:18px}
+ .feature-strip{grid-template-columns:1fr}.feature-strip>div{min-height:125px;padding:18px}.feature-strip h3{font-size:21px}
+ .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:430px){
+ .wrap{width:calc(100% - 14px)}.brand-logo{max-width:220px}
+ .story-grid,.people-grid{grid-template-columns:1fr}
+ .story-card .story-img{height:190px}.story-card h3{font-size:22px}
+ .hero-story-img,.image-placeholder{height:215px}.lead-card h1{font-size:34px}
+ .footer-grid{grid-template-columns:1fr}
+}
