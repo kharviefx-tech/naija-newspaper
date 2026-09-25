@@ -163,8 +163,9 @@ function renderPosts(items){
   $("#newsGrid").innerHTML=items.slice(0,secLimit("news",12)).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
   if($("#nLatest")) $("#nLatest").innerHTML=items.slice(0,secLimit("latest",8)).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
   $("#allNewsGrid").innerHTML=html;
-  const celebrity=items.filter(x=>String(x.category_id||"")===CATEGORY_IDS.entertainment).slice(0,secLimit("celebrity",100));
-  $("#celebrityGrid").innerHTML=celebrity.map(storyCard).join("")||'<div class="empty">No celebrity stories yet.</div>';
+  const celebrity=items.filter(x=>String(x.category_id||"")===CATEGORY_IDS.entertainment).sort((a,b)=>new Date(b.published_at||b.created_at||0)-new Date(a.published_at||a.created_at||0)).slice(0,secLimit("celebrity",200));
+  const celebGrid=$("#celebrityGrid");
+  if(celebGrid){ celebGrid.className="news-grid four-grid celebrity-large-grid"; celebGrid.innerHTML=celebrity.map(storyCard).join("")||'<div class="empty">No celebrity stories yet.</div>'; }
   if($("#latestWidget")) $("#latestWidget").innerHTML=newspaperWidget(items.slice(0,secLimit("latest",5)));
   if($("#topWidget")) $("#topWidget").innerHTML=newspaperWidget(items.slice(5,5+secLimit("latest",5)).length?items.slice(5,5+secLimit("latest",5)):items.slice(0,secLimit("latest",5)));
   const ids={business:CATEGORY_IDS.business,sports:CATEGORY_IDS.sports,technology:CATEGORY_IDS.technology,culture:CATEGORY_IDS.culture,interviews:CATEGORY_IDS.interviews,events:CATEGORY_IDS.events};
