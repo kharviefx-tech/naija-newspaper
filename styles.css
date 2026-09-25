@@ -128,3 +128,92 @@ body{background:var(--nn-paper);color:var(--nn-text);font-family:Georgia,"Times 
 }
 
 .brand-logo{display:block;width:min(100%,520px);height:auto;max-height:82px;object-fit:contain;object-position:left center}.footer-brand .brand-logo{width:310px;max-height:58px}@media(max-width:800px){.brand-logo{width:220px;max-height:48px}.footer-brand .brand-logo{width:240px}}
+
+
+/* MASTER EDITORIAL SYSTEM — original Naija Newspaper, broadsheet + reference encyclopedia */
+:root{
+ --nn-red:#b3131b;--nn-black:#111;--nn-paper:#fff;--nn-cream:#f6f5f0;
+ --nn-rule:#b8b8b2;--nn-muted:#666;--nn-blue:#2b4f72;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--nn-paper);color:#151515}
+.wrap{width:min(1280px,calc(100% - 32px));margin-inline:auto}
+.topline{font-family:Arial,sans-serif}
+.site-head{box-shadow:0 1px 0 #111}
+.masthead{display:grid!important;grid-template-columns:58px 1fr auto!important;align-items:center!important;gap:16px!important;min-height:116px!important}
+.brand-logo{width:min(560px,100%)!important;max-height:88px!important}
+.head-actions{display:flex;align-items:center;gap:10px}
+.icon-btn{font-family:Arial,sans-serif}
+.nav{position:sticky;top:0;z-index:50;box-shadow:0 2px 0 #111}
+.navin{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important}
+.nav a{font-family:Arial,sans-serif;font-weight:800;white-space:nowrap}
+.nav a:first-child{background:#111;color:#fff}
+.hero{padding-top:26px}
+.hero-grid{grid-template-columns:minmax(0,2.25fr) minmax(300px,.95fr)!important}
+.lead-card{display:grid;grid-template-columns:1fr;align-content:start}
+.lead-card h1{max-width:1000px}
+.brief-card{border-left:0}
+.brief-card .section-title{font-size:20px}
+.story-grid{grid-template-columns:2fr 1fr 1fr!important}
+.story-grid .story-card:first-child{grid-row:span 2}
+.story-grid .story-card:first-child .story-img{height:310px}
+.story-grid .story-card:first-child h3{font-size:31px}
+.story-card{min-width:0}
+.story-card .story-img{object-fit:cover}
+.people-section{padding-left:0;padding-right:0}
+.people-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.person-card{min-width:0;background:#fff}
+.person-photo{background:#e9e9e5}
+.person-card-body{min-height:152px}
+.person-card h3{font-size:22px}
+.person-card p{font-family:Arial,sans-serif}
+.wiki-profile{grid-template-columns:minmax(0,1fr) 330px!important;gap:38px!important;background:#fff}
+.wiki-main{font-family:Georgia,"Times New Roman",serif}
+.profile-breadcrumb{border-bottom:1px solid #aaa;padding-bottom:9px}
+.profile-name{font-weight:900}
+.profile-headline{font-family:Arial,sans-serif}
+.profile-section{scroll-margin-top:100px}
+.profile-section h2{font-weight:900}
+.wiki-infobox{font-family:Arial,sans-serif;box-shadow:0 1px 0 #999}
+.infobox-title{background:#e6e6e6!important;font-weight:900}
+.infobox-photo img{background:#ddd}
+.infobox-caption{font-style:italic}
+.wiki-infobox dl>div{grid-template-columns:38% 62%!important}
+.wiki-infobox dd{overflow-wrap:anywhere}
+.profile-section:first-of-type:before{content:"Contents";display:block;font:bold 16px Arial;padding:9px 12px;background:#f2f2f2;border:1px solid #bbb;margin-bottom:18px}
+.article-view{font-family:Georgia,"Times New Roman",serif}
+.article-content{max-width:780px}
+.article-view h1{font-weight:900}
+.related-people{border-top:4px solid #111;margin-top:35px;padding-top:15px}
+.related-people .people-grid{grid-template-columns:repeat(3,1fr)!important}
+.adbar{font-family:Arial,sans-serif}
+.section-head h2{font-weight:900}
+.footer{font-family:Arial,sans-serif}
+@media(max-width:900px){
+ .masthead{grid-template-columns:42px 1fr 42px!important;min-height:82px!important}
+ .brand-logo{max-height:50px!important}
+ .head-actions .advertise{display:none}
+ .hero-grid{grid-template-columns:1fr!important}
+ .story-grid{grid-template-columns:1fr 1fr!important}
+ .story-grid .story-card:first-child{grid-column:1/-1;grid-row:auto}
+ .story-grid .story-card:first-child .story-img{height:250px}
+ .people-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .wiki-profile{grid-template-columns:1fr!important}
+ .wiki-infobox{order:-1;max-width:430px}
+ .related-people .people-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:560px){
+ .wrap{width:calc(100% - 20px)}
+ .masthead{gap:8px!important}
+ .brand-logo{max-width:235px!important}
+ .hero{padding-top:18px}
+ .lead-card h1{font-size:42px}
+ .story-grid{grid-template-columns:1fr!important}
+ .story-grid .story-card:first-child .story-img{height:210px}
+ .people-grid{grid-template-columns:1fr 1fr!important}
+ .person-card h3{font-size:19px}
+ .wiki-infobox{max-width:none}
+ .profile-name{font-size:46px}
+ .profile-section:first-of-type:before{font-size:14px}
+ .related-people .people-grid{grid-template-columns:1fr 1fr!important}
+}
