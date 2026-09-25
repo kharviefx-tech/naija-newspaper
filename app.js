@@ -17,7 +17,7 @@ async function load(){
     if(p.error||n.error||c.error) throw p.error||n.error||c.error;
     people=p.data||[]; posts=n.data||[]; categories=c.data||[];
     await hydratePostImages(posts);
-    renderHero(posts); renderPeople(people); renderPosts(posts); renderTrending(posts); route();
+    renderHero(posts); renderPeople(people); renderPosts(posts); renderTrending(posts); renderBusinessLegends(); route();
   }catch(e){
     console.error(e);
     document.querySelectorAll(".loading").forEach(el=>el.outerHTML='<div class="empty">Content is temporarily unavailable. Please try again.</div>');
@@ -37,6 +37,16 @@ function storyCard(x){
  return '<article class="story-card">'+storyImage(x,"story-img")+
  '<div class="story-body"><div class="story-meta">'+esc(x.content_type||"NEWS")+" · "+esc(date(x.published_at))+"</div><h3>"+esc(x.title||"Untitled story")+"</h3><p>"+esc(x.excerpt||x.meta_description||"Read the latest story from Naija Newspaper.")+'</p><a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read story →</a></div></article>';
 }
+
+function renderBusinessLegends(){
+  const grid=$("#businessLegendsGrid"); if(!grid)return;
+  const businessPosts=posts.filter(x=>String(x.content_type||"").toLowerCase().includes("business")||String(x.title||"").toLowerCase().match(/business|investment|investor|entrepreneur|executive|company|ceo|founder|economy|funding|industry/));
+  const leaders=people.filter(x=>["entrepreneur","professional","public_figure"].includes(String(x.person_type||"").toLowerCase())||String(x.category||"").toLowerCase().includes("business")).slice(0,4);
+  const cards=businessPosts.slice(0,4).map(storyCard).join("");
+  const leaderCards=leaders.map(personCard).join("");
+  grid.innerHTML=(cards||leaderCards)?(cards+leaderCards):'<div class="empty">Business Legends stories and profiles will appear here as the editorial desk publishes them.</div>';
+}
+
 function renderPosts(items){
   const html=items.length?items.map(storyCard).join(""):'<div class="empty">No published stories yet. Your editorial desk can publish the first story.</div>';
   $("#newsGrid").innerHTML=html; $("#allNewsGrid").innerHTML=html;
@@ -115,7 +125,7 @@ function route(){
   if(/^#story\//.test(h)){showStory(decodeURIComponent(h.slice(7)));return;}
   if(/^#person\//.test(h)){showPerson(decodeURIComponent(h.slice(8)));return;}
   $("#profile").classList.add("hidden");
-  if(!h||h==="#home") setMeta("Naija Newspaper — News, People, Culture & Stories","Naija Newspaper is a Nigerian digital publication covering news, people, creators, entertainment, music, business, culture and events.","https://kharviefx-tech.github.io/naija-newspaper/","NewsMediaOrganization",{name:"Naija Newspaper",url:"https://kharviefx-tech.github.io/naija-newspaper/"});
+  if(!h||h==="#home") setMeta("Naija Newspaper — Business Legends, News, People & Stories","Naija Newspaper is an independent Nigerian digital publication led by Business Legends, business leaders, entrepreneurs, people and major stories.","https://kharviefx-tech.github.io/naija-newspaper/","NewsMediaOrganization",{name:"Naija Newspaper",url:"https://kharviefx-tech.github.io/naija-newspaper/"});
 }
 $("#peopleSearch").addEventListener("input",filterPeople);
 $("#peopleType").addEventListener("change",filterPeople);
