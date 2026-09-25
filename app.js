@@ -149,7 +149,15 @@ function localSectionHtml(section,limit=3){
  return arr.length?arr.map(storyCard).join(""):"";
 }
 function secLimit(key,fallback){const x=homepageSections.find(s=>s.section_key===key);return Number(x?.max_items)||fallback}
-function renderCustomCMSSections(){homepageSections.filter(x=>!["latest","best_music","songs","albums","news","lyrics","sports","celebrity","business_legends","videos","editors_picks","artists","charts","ep","reviews","covers","podcast","playlists","interviews","events","sponsored"].includes(x.section_key)).forEach(cfg=>{const el=document.querySelector("#cms-"+slugify(cfg.section_key)+" .cms-custom-grid");if(el)el.innerHTML=posts.slice(0,secLimit(cfg.section_key,6)).map(storyCard).join("")||"<div class=\"empty\">No published stories yet.</div>";});}
+function renderCustomCMSSections(){
+  const builtIn=new Set(["latest","best_music","songs","albums","news","lyrics","sports","celebrity","business_legends","videos","editors_picks","artists","charts","ep","reviews","covers","podcast","playlists","interviews","events","sponsored"]);
+  homepageSections.filter(cfg=>!builtIn.has(cfg.section_key)).forEach(cfg=>{
+    const el=document.querySelector("#cms-"+slugify(cfg.section_key)+" .cms-custom-grid");
+    if(!el)return;
+    const html=posts.slice(0,secLimit(cfg.section_key,6)).map(storyCard).join("");
+    el.innerHTML=html||'<div class="empty">No published stories yet.</div>';
+  });
+}
 function renderPosts(items){
   const html=items.length?items.map(storyCard).join(""):'<div class="empty">No published stories yet. Your editorial desk can publish the first story.</div>';
   $("#newsGrid").innerHTML=items.slice(0,secLimit("news",12)).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
