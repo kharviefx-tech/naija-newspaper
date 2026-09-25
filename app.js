@@ -16,13 +16,24 @@ async function load(){
     ]);
     if(p.error||n.error||c.error) throw p.error||n.error||c.error;
     people=p.data||[]; posts=n.data||[]; categories=c.data||[];
-    renderPeople(people); renderPosts(posts); renderTrending(posts); route();
+    renderHero(posts); renderPeople(people); renderPosts(posts); renderTrending(posts); route();
   }catch(e){
     console.error(e);
     document.querySelectorAll(".loading").forEach(el=>el.outerHTML='<div class="empty">Content is temporarily unavailable. Please try again.</div>');
   }
 }
 
+function renderHero(items){
+  const x=items[0];
+  if(!x)return;
+  const card=document.querySelector(".lead-card");
+  if(!card)return;
+  card.innerHTML=(x.featured_image_url?'<img class="hero-story-img" src="'+esc(x.featured_image_url)+'" alt="'+esc(x.title||"Lead story")+'">':'<div class="image-placeholder">NAIJA NEWSPAPER</div>')+
+    '<div class="story-meta">'+esc(x.content_type||"NEWS")+' · '+esc(date(x.published_at))+'</div>'+
+    '<h1>'+esc(x.title||"Latest story")+'</h1>'+
+    '<p>'+esc(x.excerpt||x.meta_description||"The latest story from Naija Newspaper.")+'</p>'+
+    '<a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read full story →</a>';
+}
 function storyCard(x){
   return '<article class="story-card">'+(x.featured_image_url?'<img class="story-img" src="'+esc(x.featured_image_url)+'" alt="'+esc(x.title||"Story")+'" loading="lazy">':'<div class="story-img"></div>')+
   '<div class="story-body"><div class="story-meta">'+esc(x.content_type||"NEWS")+' · '+esc(date(x.published_at))+'</div><h3>'+esc(x.title||"Untitled story")+'</h3><p>'+esc(x.excerpt||x.meta_description||"Read the latest story from Naija Newspaper.")+'</p><a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read story →</a></div></article>';
