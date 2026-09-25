@@ -196,3 +196,27 @@ async function loadPunchNews(){
  }}
 loadPunchNews();
 setInterval(loadPunchNews,10*60*1000);
+
+const NJOK_FEEDS={
+ latest:"https://notjustok.com/feed/",
+ songs:"https://notjustok.com/category/songs/feed/",
+ albums:"https://notjustok.com/category/songs/albums/feed/",
+ lyrics:"https://notjustok.com/category/lyrics/feed/",
+ videos:"https://notjustok.com/category/videos/feed/",
+ picks:"https://notjustok.com/category/recommended-articles/feed/"
+};
+async function loadNotJustOkModules(){
+ const jobs=Object.entries(NJOK_FEEDS).map(async([key,url])=>{
+  const r=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(url),{cache:"no-store"});
+  if(!r.ok) throw new Error(key);
+  const d=await r.json(); return [key,(d.items||[]).slice(0,6)];
+ });
+ try{
+  const data=Object.fromEntries(await Promise.all(jobs));
+  const card=item=>'<article class="njok-card">'+(item.thumbnail?'<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow"><img src="'+esc(item.thumbnail)+'" alt="" loading="lazy" onerror="this.remove()"></a>':'')+'<div class="story-meta">NOTJUSTOK · '+esc((item.categories&&item.categories[0])||"STORY")+'</div><h3><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer nofollow">'+esc(item.title)+'</a></h3><div class="live-time">'+esc(item.pubDate?new Date(item.pubDate).toLocaleDateString("en-NG",{day:"numeric",month:"short",year:"numeric"}):"Latest")+'</div></article>';
+  Object.entries({nLatest:"latest",nSongs:"songs",nAlbums:"albums",nLyrics:"lyrics",nVideos:"videos",nPicks:"picks"}).forEach(([id,key])=>{const el=$("#"+id);if(el)el.innerHTML=(data[key]||[]).map(card).join("")||'<div class="empty">No stories available.</div>';});
+ }catch(e){console.warn("NotJustOk feeds unavailable",e);}
+}
+loadNotJustOkModules();
+setInterval(loadNotJustOkModules,10*60*1000);
+
