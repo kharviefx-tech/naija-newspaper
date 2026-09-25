@@ -43,9 +43,7 @@ function renderPosts(items){
   $("#newsGrid").innerHTML=html; $("#allNewsGrid").innerHTML=html;
 }
 function personCard(x){
-  return '<a class="person-card" href="#person/'+encodeURIComponent(x.slug)+'">'+(x.profile_image_url?'<img src="'+esc(x.profile_image_url)+'" alt="'+esc(x.display_name)+'" loading="lazy">':'<div class="story-img"></div>')+
-  '<h3>'+esc(x.display_name)+'</h3><p>'+esc(x.headline||x.category||x.person_type||"Public profile")+'</p>'+
-  (x.is_verified?'<span class="verified">✓ Verified by Naija Newspaper</span>':"")+'</a>';
+  return '<a class="person-card" href="#person/'+encodeURIComponent(x.slug)+'"><div class="person-photo">'+(x.profile_image_url?'<img src="'+esc(x.profile_image_url)+'" alt="'+esc(x.display_name)+'" loading="lazy">':'<div class="person-placeholder">NN</div>')+'</div><div class="person-card-body"><div class="story-meta">PEOPLE · '+esc(x.person_type||"PROFILE")+'</div><h3>'+esc(x.display_name)+'</h3><p>'+esc(x.headline||x.category||"Public profile")+'</p>'+(x.is_verified?'<span class="verified">✓ Verified by Naija Newspaper</span>':"")+'<span class="profile-arrow">View profile →</span></div></a>';
 }
 function renderPeople(items){
   const html=items.length?items.slice(0,12).map(personCard).join(""):'<div class="empty">No published profiles yet. Submit a person to start the directory.</div>';
@@ -87,18 +85,19 @@ async function showStory(slug){
   window.scrollTo({top:document.querySelector("#profile").offsetTop-90,behavior:"smooth"});
 }
 async function showPerson(slug){
-  const x=people.find(p=>p.slug===slug);
-  $("#profile").classList.remove("hidden");
+  const x=people.find(p=>p.slug===slug); $("#profile").classList.remove("hidden");
   if(!x){$("#profile").innerHTML='<div class="empty">Profile not found.</div>';return;}
-  const r=await db.from("people_links").select("*").eq("person_id",x.id).order("sort_order");
-  const links=r.data||[];
-  const canonical=location.href.split("#")[0]+"?person="+encodeURIComponent(x.slug);
-  $("#profile").innerHTML='<div class="profile-layout"><aside>'+(x.profile_image_url?'<img src="'+esc(x.profile_image_url)+'" alt="'+esc(x.display_name)+'">':'<div class="story-img"></div>')+
-    '<div class="infobox"><div><strong>Type</strong><span>'+esc(x.person_type||"—")+'</span></div><div><strong>Category</strong><span>'+esc(x.category||"—")+'</span></div><div><strong>Location</strong><span>'+esc(x.location||"—")+'</span></div></div></aside><article><div class="section-kicker">PEOPLE PROFILE</div><h1 class="profile-name">'+esc(x.display_name)+'</h1><p class="profile-headline">'+esc(x.headline||"")+'</p>'+
-    (x.is_verified?'<span class="verified">✓ Verified by Naija Newspaper</span>':"")+'<hr><h2>Biography</h2><div class="bio">'+contentHtml(x.bio||x.short_bio||"This profile is being developed.")+'</div>'+
-    '<h2>Official links</h2><div id="profileLinks" class="link-grid">'+(links.map(l=>'<a href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.label||l.platform)+" →</a>").join("")||"<div class='empty'>Official links will appear here.</div>")+'</div>'+
-    '<p class="claim-note">Is this your profile? <a class="read-link" href="#claim">Claim or request an update →</a></p></article></div>';
-  setMeta((x.meta_title||x.display_name)+" — Naija Newspaper",x.meta_description||x.short_bio||x.headline||"People profile on Naija Newspaper",canonical,"Person",{name:x.display_name,description:x.bio||x.short_bio,image:x.profile_image_url,url:canonical,sameAs:Array.isArray(x.same_as)?x.same_as:[]});
+  const r=await db.from("people_links").select("*").eq("person_id",x.id).order("sort_order"), links=r.data||[];
+  const sr=await db.from("post_people").select("post_id,relationship,posts(*)").eq("person_id",x.id), stories=(sr.data||[]).map(v=>v.posts).filter(Boolean).slice(0,6);
+  const canonical=location.href.split("#")[0]+"?person="+encodeURIComponent(x.slug), sameAs=Array.isArray(x.same_as)?x.same_as:[];
+  $("#profile").innerHTML='<div class="wiki-profile"><div class="wiki-main"><div class="profile-breadcrumb">PEOPLE / '+esc(x.person_type||"PROFILE")+'</div><h1 class="profile-name">'+esc(x.display_name)+'</h1><div class="profile-rule"></div><p class="profile-headline">'+esc(x.headline||"")+'</p>'+(x.is_verified?'<span class="verified large">✓ Verified by Naija Newspaper</span>':"")+
+  '<section class="profile-section"><h2>Biography</h2><div class="bio">'+contentHtml(x.bio||x.short_bio||"This profile is being developed.")+'</div></section>'+
+  '<section class="profile-section"><h2>Career & work</h2><p>Naija Newspaper documents the public career, work and notable activities associated with this profile as sourced and published by the editorial desk.</p></section>'+
+  (stories.length?'<section class="profile-section"><h2>Naija Newspaper coverage</h2><div class="profile-story-list">'+stories.map(s=>'<a href="#story/'+encodeURIComponent(s.slug||s.id)+'"><span class="story-meta">'+esc(s.content_type||"STORY")+' · '+esc(date(s.published_at))+'</span><strong>'+esc(s.title)+'</strong></a>').join("")+'</div></section>':"")+
+  '<section class="profile-section"><h2>Official links</h2><div class="link-grid">'+(links.map(l=>'<a href="'+esc(l.url)+'" target="_blank" rel="noopener noreferrer">'+esc(l.label||l.platform)+" →</a>").join("")||"<div class='empty'>Official links will appear here.</div>")+'</div></section>'+
+  '<section class="profile-section"><h2>References & editorial note</h2><p>This profile is an editorial reference page. Information may be updated when new, reliable material is published or when a verified profile claim is approved.</p><p class="claim-note">Know this person or manage this profile? <a class="read-link" href="#claim">Claim or request an update →</a></p></section></div>'+
+  '<aside class="wiki-infobox"><div class="infobox-title">'+esc(x.display_name)+'</div><div class="infobox-photo">'+(x.profile_image_url?'<img src="'+esc(x.profile_image_url)+'" alt="'+esc(x.display_name)+'">':'<div class="person-placeholder large">NN</div>')+'</div><div class="infobox-caption">'+esc(x.headline||x.category||"People profile")+'</div><dl><div><dt>Profession</dt><dd>'+esc(x.headline||x.person_type||"—")+'</dd></div><div><dt>Type</dt><dd>'+esc(x.person_type||"—")+'</dd></div><div><dt>Category</dt><dd>'+esc(x.category||"—")+'</dd></div><div><dt>Location</dt><dd>'+esc(x.location||"—")+'</dd></div>'+(x.country?'<div><dt>Country</dt><dd>'+esc(x.country)+'</dd></div>':"")+'</dl>'+(sameAs.length?'<div class="infobox-links"><strong>External profiles</strong>'+sameAs.slice(0,6).map(u=>'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+esc(u)+'</a>').join("")+'</div>':"")+'</aside></div>';
+  setMeta((x.meta_title||x.display_name)+" — Naija Newspaper",x.meta_description||x.short_bio||x.headline||"People profile on Naija Newspaper",canonical,"Person",{name:x.display_name,description:x.bio||x.short_bio,image:x.profile_image_url,url:canonical,sameAs:sameAs});
   window.scrollTo({top:document.querySelector("#profile").offsetTop-90,behavior:"smooth"});
 }
 function route(){
