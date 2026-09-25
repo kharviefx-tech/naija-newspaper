@@ -39,3 +39,92 @@ body{background:#fff;color:var(--nn-dark)}
 .profile-section h2{font-family:Georgia,serif}
 .footer{border-top:6px solid #111;background:#f3f3f3}
 @media(max-width:800px){.main-nav{overflow-x:auto;white-space:nowrap}.main-nav a{font-size:11px}.section-title{font-size:21px}}
+
+
+/* FINAL EDITORIAL REDESIGN — Naija Newspaper / Nigerian broadsheet architecture */
+:root{
+  --nn-red:#b40016;
+  --nn-black:#111;
+  --nn-paper:#fff;
+  --nn-off:#f4f4f1;
+  --nn-rule:#b9b9b4;
+  --nn-text:#161616;
+}
+body{background:var(--nn-paper);color:var(--nn-text);font-family:Georgia,"Times New Roman",serif}
+.wrap{width:min(calc(100% - 34px),1280px)}
+.topline{background:#111;border-bottom:4px solid var(--nn-red)}
+.topin{font-size:10px;text-transform:uppercase;letter-spacing:1.2px}
+.site-head{background:#fff;border-bottom:0;position:relative}
+.masthead{min-height:126px;grid-template-columns:70px 1fr 170px;border-bottom:1px solid #111}
+.brand{gap:13px}
+.brand-mark{width:58px;height:58px;background:var(--nn-red);border:3px solid #111;box-shadow:3px 3px 0 #111;font-family:Georgia,serif;font-size:17px}
+.brand-word{font-family:Georgia,serif!important;font-weight:900!important;font-size:37px!important;letter-spacing:-2px!important}
+.brand-word b{font-weight:400}
+.head-actions .icon-btn{font-size:29px}
+.advertise{background:var(--nn-red);border:2px solid #111;padding:10px 12px}
+.nav{border-top:5px solid #111;border-bottom:1px solid #aaa;background:#fff}
+.navin{justify-content:flex-start}
+.nav a{padding:13px 15px;border-right:1px solid #ddd;font-size:11px}
+.nav a:first-child{border-left:1px solid #ddd}
+.nav a:hover{background:var(--nn-red);color:#fff}
+.hero{padding:22px 0 16px}
+.section-kicker,.story-meta,.tag{color:var(--nn-red);font-weight:900}
+.hero-grid{grid-template-columns:minmax(0,2.35fr) minmax(280px,.9fr);gap:0;border-top:4px solid #111;border-bottom:1px solid #111}
+.lead-card{padding:0 24px 22px 0!important;border-right:1px solid #aaa!important}
+.lead-card h1{font-size:clamp(42px,5.2vw,72px);line-height:.91;margin:12px 0 14px;letter-spacing:-3px}
+.hero-story-img,.image-placeholder{height:350px;margin-bottom:16px}
+.image-placeholder{background:linear-gradient(135deg,#111 0 72%,var(--nn-red) 72%);font-size:13px;letter-spacing:3px}
+.brief-card{border:0!important;padding:0 0 0 22px!important}
+.brief-card .section-title{margin:0 0 2px}
+.section-title{font-family:Georgia,serif;font-size:24px;border-bottom:4px solid #111;text-transform:uppercase;padding:9px 0}
+.section-title:after{background:var(--nn-red)}
+.list article{padding:13px 0;border-bottom:1px solid #bbb}
+.list h4{font-size:19px;margin:4px 0}
+.adbar{margin:0 auto;padding:15px 0;border-top:0;border-bottom:1px solid #999;background:#fafafa}
+.section{padding:38px 0}
+.section-head{border-bottom:5px solid #111;margin-bottom:14px}
+.section-head h2{font-size:34px;font-family:Georgia,serif}
+.story-grid{grid-template-columns:repeat(3,1fr);gap:0;background:#111;border:0}
+.story-card{border-right:1px solid #111;border-bottom:1px solid #111}
+.story-card .story-img{height:205px}
+.story-body{padding:15px 17px 18px}
+.story-card h3{font-size:23px}
+.people-section{background:#f7f7f5;border-top:5px solid #111;border-bottom:5px solid #111;padding-top:28px;padding-bottom:28px}
+.people-grid{grid-template-columns:repeat(4,1fr);gap:0;background:#aaa;border:0}
+.person-card{border-right:1px solid #aaa;border-bottom:1px solid #aaa}
+.person-photo{aspect-ratio:1/1.08}
+.person-card-body{border-top:5px solid var(--nn-red);padding:13px 14px 17px}
+.person-card h3{font-size:24px}
+.profile-arrow,.read-link{color:var(--nn-red)}
+.verified{background:#111;color:#fff}
+.wiki-profile{grid-template-columns:minmax(0,1fr) 340px;border-top:5px solid #111;padding-top:22px}
+.profile-name{font-family:Georgia,serif;font-size:clamp(48px,6vw,78px)}
+.profile-rule{background:var(--nn-red)}
+.wiki-infobox{background:#f1f1ee;border:1px solid #888;padding:8px}
+.infobox-title{background:#ddd;border:1px solid #aaa;font-family:Georgia,serif;font-size:21px}
+.wiki-infobox dl>div{border-top:1px solid #c1c1bd}
+.profile-section h2{font-family:Georgia,serif;font-size:29px;border-bottom:3px solid #111}
+.profile-story-list{border:1px solid #aaa}
+.profile-story-list a:hover{border-left:5px solid var(--nn-red)}
+.footer{border-top:7px solid #111;background:#111;color:#fff}
+.footer-brand .brand-mark{background:var(--nn-red)}
+.footer-bottom{border-top:1px solid #555}
+@media(max-width:800px){
+ .wrap{width:min(calc(100% - 20px),1280px)}
+ .masthead{min-height:82px;grid-template-columns:42px 1fr 42px}
+ .brand-word{font-size:21px!important}
+ .brand-mark{width:36px;height:36px;font-size:10px;box-shadow:2px 2px 0 #111}
+ .nav{display:block;overflow-x:auto}
+ .navin{display:flex;overflow-x:auto}
+ .nav a{padding:10px 12px}
+ .hero-grid{grid-template-columns:1fr}
+ .lead-card{padding:0 0 18px!important;border-right:0!important;border-bottom:1px solid #aaa!important}
+ .brief-card{padding:18px 0 0!important}
+ .hero-story-img,.image-placeholder{height:225px}
+ .story-grid{grid-template-columns:1fr}
+ .people-grid{grid-template-columns:repeat(2,1fr)}
+ .wiki-profile{grid-template-columns:1fr}
+ .wiki-infobox{order:-1}
+}
+
+.brand-logo{display:block;width:min(100%,520px);height:auto;max-height:82px;object-fit:contain;object-position:left center}.footer-brand .brand-logo{width:310px;max-height:58px}@media(max-width:800px){.brand-logo{width:220px;max-height:48px}.footer-brand .brand-logo{width:240px}}
