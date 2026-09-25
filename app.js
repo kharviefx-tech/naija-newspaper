@@ -138,11 +138,15 @@ function route(){
   if(!h||h==="#home") setMeta("Naija Newspaper — Business Legends, News, People & Stories","Naija Newspaper is an independent Nigerian digital publication led by Business Legends, business leaders, entrepreneurs, people and major stories.","https://kharviefx-tech.github.io/naija-newspaper/","NewsMediaOrganization",{name:"Naija Newspaper",url:"https://kharviefx-tech.github.io/naija-newspaper/"});
 }
 $("#peopleSearch").addEventListener("input",filterPeople);
+// Mobile menu controls are initialized safely after the page is parsed.
+const menuButton=document.getElementById("menuBtn"), closeMenuButton=document.getElementById("closeMenu"), drawerBackdrop=document.getElementById("drawerBackdrop");
+if(menuButton) menuButton.addEventListener("click",()=>setMenu(true));
+if(closeMenuButton) closeMenuButton.addEventListener("click",()=>setMenu(false));
+if(drawerBackdrop) drawerBackdrop.addEventListener("click",()=>setMenu(false));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")setMenu(false)});
+
 $("#peopleType").addEventListener("change",filterPeople);
 function setMenu(open){$("#menuDrawer").classList.toggle("open",open);$("#drawerBackdrop").classList.toggle("open",open);$("#menuDrawer").setAttribute("aria-hidden",String(!open));$("#drawerBackdrop").setAttribute("aria-hidden",String(!open));$("#menuBtn").setAttribute("aria-expanded",String(open));document.body.classList.toggle("drawer-open",open)}
-$("#menuBtn").addEventListener("click",()=>setMenu(true));
-$("#closeMenu").addEventListener("click",()=>setMenu(false));
-$("#drawerBackdrop").addEventListener("click",()=>setMenu(false));
 document.querySelectorAll("#menuDrawer a").forEach(a=>a.addEventListener("click",()=>setMenu(false)));
 $("#searchBtn").addEventListener("click",()=>$("#searchPanel").classList.add("open"));
 $("#closeSearch").addEventListener("click",()=>$("#searchPanel").classList.remove("open"));
