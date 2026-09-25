@@ -282,3 +282,10 @@ body.drawer-open{overflow:hidden}
 .live-news-img{height:170px}
 .live-news-card-body{padding:14px 16px 16px}
 @media(max-width:560px){.hero-story-img{height:250px}.story-img{height:190px}.live-news-img{height:190px}}
+
+/* FORCE CLOSED MENU STATE: keep drawer completely out of layout until opened */
+.menu-drawer[aria-hidden="true"]{visibility:hidden!important;pointer-events:none!important;transform:translate3d(-110%,0,0)!important}
+.menu-drawer[aria-hidden="false"]{visibility:visible!important;pointer-events:auto!important;transform:translate3d(0,0,0)!important}
+.drawer-backdrop[aria-hidden="true"]{visibility:hidden!important;pointer-events:none!important;opacity:0!important}
+.drawer-backdrop[aria-hidden="false"]{visibility:visible!important;pointer-events:auto!important;opacity:1!important}
+.menu-drawer{position:fixed!important;left:0!important;top:0!important;bottom:0!important;height:100dvh!important;max-height:100dvh!important;box-sizing:border-box!important}
