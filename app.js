@@ -5,7 +5,7 @@ const $=s=>document.querySelector(s);
 const esc=v=>String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const date=v=>v?new Date(v).toLocaleDateString("en-NG",{year:"numeric",month:"short",day:"numeric"}):"";
 const slugify=v=>String(v||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-let people=[],posts=[],categories=[];
+let people=[],posts=[],categories=[],siteSettings={},homepageSections=[];
 
 
 function bindNavigation(){
@@ -19,13 +19,18 @@ function bindNavigation(){
 
 async function load(){
   try{
-    const [p,n,c]=await Promise.all([
+    const [p,n,c,s,h]=await Promise.all([
       db.from("people_profiles").select("*").eq("is_published",true).order("display_name"),
       db.from("posts").select("*").eq("is_published",true).order("published_at",{ascending:false}).limit(1000),
-      db.from("post_categories").select("*").eq("is_active",true).order("sort_order")
+      db.from("post_categories").select("*").eq("is_active",true).order("sort_order"),
+      db.from("site_settings").select("*"),
+      db.from("homepage_sections").select("*").eq("enabled",true).order("sort_order")
     ]);
     if(p.error||n.error||c.error) throw p.error||n.error||c.error;
     people=p.data||[]; posts=n.data||[]; categories=c.data||[];
+    siteSettings=Object.fromEntries((s.data||[]).map(x=>[x.setting_key,x.setting_value||""]));
+    homepageSections=h.data||[];
+    applyHomepageCMS();
     await hydratePostImages(posts);
     renderHero(posts); renderPeople(people); renderPosts(posts); renderTrending(posts); renderBusinessLegends(); bindNavigation(); route();
   }catch(e){
@@ -34,8 +39,46 @@ async function load(){
   }
 }
 
+function cmsSetting(key,fallback=""){return siteSettings[key]??fallback}
+function applyHomepageCMS(){
+ const root=document.documentElement;
+ if(cmsSetting("theme_green"))root.style.setProperty("--green",cmsSetting("theme_green"));
+ if(cmsSetting("theme_black"))root.style.setProperty("--ink",cmsSetting("theme_black"));
+ if(cmsSetting("theme_paper"))root.style.setProperty("--paper",cmsSetting("theme_paper"));
+ const hero=document.querySelector("#heroFeature");
+ if(hero){
+  const kicker=cmsSetting("hero_kicker","FEATURED"), title=cmsSetting("hero_title","Stories shaping the conversation."), desc=cmsSetting("hero_description","News, music, entertainment, sports, business and people — in one editorial destination.");
+  const featured=cmsSetting("hero_story_slug"); const x=featured?posts.find(p=>String(p.slug||"")===featured):null;
+  if(!x) hero.innerHTML='<div class="hero-placeholder">'+esc(cmsSetting("site_name","NAIJA NEWSPAPER"))+'</div><div class="eyebrow">'+esc(kicker)+'</div><h1>'+esc(title)+'</h1><p>'+esc(desc)+'</p>';
+ }
+ const nav=document.querySelector(".primary-nav .nav-scroll");
+ if(nav){const names=cmsSetting("primary_nav","Home|Songs|News|Lyrics|Sports|Entertainment|Business Legends|Videos|Artists|Ranking|Topics|Advertise").split("|").map(x=>x.trim()).filter(Boolean);const map={"Home":"#home","Songs":"#songs","News":"#news","Lyrics":"#lyrics","Sports":"#sports","Entertainment":"#celebrity-desk","Business Legends":"#business-legends","Videos":"#videos","Artists":"#artists","Ranking":"#charts","Topics":"#topics","Advertise":"#advertise"};nav.innerHTML=names.map(n=>'<a href="'+(map[n]||"#"+slugify(n))+'">'+esc(n)+'</a>').join("")}
+ const hot=document.querySelector(".hot-links");
+ if(hot){const names=cmsSetting("hot_stories","Music|News|Sports|Lyrics|Entertainment").split("|").map(x=>x.trim()).filter(Boolean);const map={"Music":"#songs","News":"#news","Sports":"#sports","Lyrics":"#lyrics","Entertainment":"#celebrity-desk"};hot.innerHTML=names.map(n=>'<a href="'+(map[n]||"#"+slugify(n))+'">'+esc(n)+'</a>').join("")}
+ const footerDesc=document.querySelector(".footer-top > div p"); if(footerDesc)footerDesc.textContent=cmsSetting("footer_description","News, music, entertainment, sports, business and people.");
+ const year=document.querySelector("#year"); if(year)year.parentElement.innerHTML="© "+new Date().getFullYear()+" Naija Newspaper. "+esc(cmsSetting("footer_copyright","All rights reserved."));
+ applySectionCMS();
+}
+function applySectionCMS(){
+ const sectionMap={latest:"#latest",best_music:".music-band",songs:"#songs",albums:"#albums",news:"#news",lyrics:"#lyrics",sports:"#sports",celebrity:"#celebrity-desk",business_legends:"#business-legends",videos:"#videos",editors_picks:"#editor-picks",artists:"#artists",charts:"#charts",ep:"#ep",reviews:"#reviews",covers:"#covers",podcast:"#podcast",playlists:"#playlists",interviews:"#interviews",events:"#events",sponsored:"#sponsored"};
+ const app=document.querySelector("#app"), profile=document.querySelector("#profile");
+ homepageSections.forEach(cfg=>{
+   let el=document.querySelector(sectionMap[cfg.section_key]||("#cms-"+cfg.section_key));
+   if(!el&&app&&cfg.section_key&&!["latest","best_music","songs","albums","news","lyrics","sports","celebrity","business_legends","videos","editors_picks","artists","charts","ep","reviews","covers","podcast","playlists","interviews","events","sponsored"].includes(cfg.section_key)){
+     el=document.createElement("section");el.id="cms-"+slugify(cfg.section_key);el.className="wrap section cms-custom-section";el.innerHTML='<div class="section-head"><div><span class="eyebrow"></span><h2></h2></div></div><div class="news-grid three-grid cms-custom-grid"></div>';app.insertBefore(el,profile||null);
+   }
+   if(!el)return;
+   if(cfg.title){const h=el.querySelector("h2");if(h)h.textContent=cfg.title}
+   if(cfg.kicker){const k=el.querySelector(".eyebrow");if(k)k.textContent=cfg.kicker}
+   const link=el.querySelector(".section-head > a"); if(link&&cfg.href)link.href=cfg.href;
+   el.dataset.cmsLimit=String(cfg.max_items||6);
+   el.style.order=String(cfg.sort_order||0);
+ }
+ const configured=new Set(homepageSections.map(x=>x.section_key));
+ Object.entries(sectionMap).forEach(([key,sel])=>{if(!configured.has(key)){const el=document.querySelector(sel);if(el)el.hidden=true;}});
+}
 function renderHero(items){
- const x=items[0]; if(!x)return;
+ const preferred=cmsSetting("hero_story_slug"); const x=(preferred&&items.find(p=>String(p.slug||"")===preferred))||items[0]; if(!x)return;
  const card=document.querySelector("#heroFeature"); if(!card)return;
  card.innerHTML=storyImage(x,"hero-story-img")+
  '<div class="story-meta">'+esc(x.content_type||"NEWS")+" · "+esc(date(x.published_at))+"</div>"+
