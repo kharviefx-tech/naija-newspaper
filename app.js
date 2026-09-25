@@ -72,9 +72,11 @@ function applySectionCMS(){
    if(cfg.kicker){const k=el.querySelector(".eyebrow");if(k)k.textContent=cfg.kicker}
    const link=el.querySelector(".section-head > a"); if(link&&cfg.href)link.href=cfg.href;
    el.dataset.cmsLimit=String(cfg.max_items||6);
-   el.style.order=String(cfg.sort_order||0);
  }
  const configured=new Set(homepageSections.map(x=>x.section_key));
+ const ordered=homepageSections.map(x=>sectionMap[x.section_key]||"#cms-"+slugify(x.section_key)).map(sel=>document.querySelector(sel)).filter(Boolean);
+ if(app&&profile)ordered.forEach(el=>app.insertBefore(el,profile));
+ renderCustomCMSSections();
  Object.entries(sectionMap).forEach(([key,sel])=>{if(!configured.has(key)){const el=document.querySelector(sel);if(el)el.hidden=true;}});
 }
 function renderHero(items){
@@ -146,17 +148,19 @@ function localSectionHtml(section,limit=3){
  const arr=localStories(section,limit);
  return arr.length?arr.map(storyCard).join(""):"";
 }
+function secLimit(key,fallback){const x=homepageSections.find(s=>s.section_key===key);return Number(x?.max_items)||fallback}
+function renderCustomCMSSections(){homepageSections.filter(x=>!["latest","best_music","songs","albums","news","lyrics","sports","celebrity","business_legends","videos","editors_picks","artists","charts","ep","reviews","covers","podcast","playlists","interviews","events","sponsored"].includes(x.section_key)).forEach(cfg=>{const el=document.querySelector("#cms-"+slugify(cfg.section_key)+" .cms-custom-grid");if(el)el.innerHTML=posts.slice(0,secLimit(cfg.section_key,6)).map(storyCard).join("")||"<div class=\"empty\">No published stories yet.</div>";});}
 function renderPosts(items){
   const html=items.length?items.map(storyCard).join(""):'<div class="empty">No published stories yet. Your editorial desk can publish the first story.</div>';
-  $("#newsGrid").innerHTML=items.slice(0,12).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
-  if($("#nLatest")) $("#nLatest").innerHTML=items.slice(0,8).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
+  $("#newsGrid").innerHTML=items.slice(0,secLimit("news",12)).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
+  if($("#nLatest")) $("#nLatest").innerHTML=items.slice(0,secLimit("latest",8)).map(storyCard).join("")||'<div class="empty">No published stories yet.</div>';
   $("#allNewsGrid").innerHTML=html;
-  const celebrity=items.filter(x=>String(x.category_id||"")===CATEGORY_IDS.entertainment).slice(0,100);
+  const celebrity=items.filter(x=>String(x.category_id||"")===CATEGORY_IDS.entertainment).slice(0,secLimit("celebrity",100));
   $("#celebrityGrid").innerHTML=celebrity.map(storyCard).join("")||'<div class="empty">No celebrity stories yet.</div>';
-  if($("#latestWidget")) $("#latestWidget").innerHTML=newspaperWidget(items.slice(0,5));
-  if($("#topWidget")) $("#topWidget").innerHTML=newspaperWidget(items.slice(5,10).length?items.slice(5,10):items.slice(0,5));
+  if($("#latestWidget")) $("#latestWidget").innerHTML=newspaperWidget(items.slice(0,secLimit("latest",5)));
+  if($("#topWidget")) $("#topWidget").innerHTML=newspaperWidget(items.slice(5,5+secLimit("latest",5)).length?items.slice(5,5+secLimit("latest",5)):items.slice(0,secLimit("latest",5)));
   const ids={business:CATEGORY_IDS.business,sports:CATEGORY_IDS.sports,technology:CATEGORY_IDS.technology,culture:CATEGORY_IDS.culture,interviews:CATEGORY_IDS.interviews,events:CATEGORY_IDS.events};
-  const newsBottom=$("#newsWidget"); if(newsBottom) newsBottom.innerHTML=newspaperWidget(items.filter(x=>String(x.category_id||"")===CATEGORY_IDS.news).slice(0,5));
+  const newsBottom=$("#newsWidget"); if(newsBottom) newsBottom.innerHTML=newspaperWidget(items.filter(x=>String(x.category_id||"")===CATEGORY_IDS.news).slice(0,secLimit("news",5)));
   Object.entries(ids).forEach(([name,id])=>{const el=$("#"+name+"Widget");if(el)el.innerHTML=newspaperWidget(items.filter(x=>String(x.category_id||"")===id).slice(0,5));});
 }
 function personCard(x){
