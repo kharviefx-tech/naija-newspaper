@@ -25,19 +25,17 @@ async function load(){
 }
 
 function renderHero(items){
-  const x=items[0];
-  if(!x)return;
-  const card=document.querySelector(".lead-card");
-  if(!card)return;
-  card.innerHTML=(x.featured_image_url?'<img class="hero-story-img" src="'+esc(x.featured_image_url)+'" alt="'+esc(x.title||"Lead story")+'">':'<div class="image-placeholder">NAIJA NEWSPAPER</div>')+
-    '<div class="story-meta">'+esc(x.content_type||"NEWS")+' · '+esc(date(x.published_at))+'</div>'+
-    '<h1>'+esc(x.title||"Latest story")+'</h1>'+
-    '<p>'+esc(x.excerpt||x.meta_description||"The latest story from Naija Newspaper.")+'</p>'+
-    '<a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read full story →</a>';
+ const x=items[0]; if(!x)return;
+ const card=document.querySelector(".lead-card"); if(!card)return;
+ card.innerHTML=storyImage(x,"hero-story-img")+
+ '<div class="story-meta">'+esc(x.content_type||"NEWS")+" · "+esc(date(x.published_at))+"</div>"+
+ '<h1>'+esc(x.title||"Latest story")+"</h1>"+
+ '<p>'+esc(x.excerpt||x.meta_description||"The latest story from Naija Newspaper.")+"</p>"+
+ '<a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read full story →</a>";
 }
 function storyCard(x){
-  return '<article class="story-card">'+(x.featured_image_url?'<img class="story-img" src="'+esc(x.featured_image_url)+'" alt="'+esc(x.title||"Story")+'" loading="lazy">':'<div class="story-img"></div>')+
-  '<div class="story-body"><div class="story-meta">'+esc(x.content_type||"NEWS")+' · '+esc(date(x.published_at))+'</div><h3>'+esc(x.title||"Untitled story")+'</h3><p>'+esc(x.excerpt||x.meta_description||"Read the latest story from Naija Newspaper.")+'</p><a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read story →</a></div></article>';
+ return '<article class="story-card">'+storyImage(x,"story-img")+
+ '<div class="story-body"><div class="story-meta">'+esc(x.content_type||"NEWS")+" · "+esc(date(x.published_at))+"</div><h3>"+esc(x.title||"Untitled story")+"</h3><p>"+esc(x.excerpt||x.meta_description||"Read the latest story from Naija Newspaper.")+'</p><a class="read-link" href="#story/'+encodeURIComponent(x.slug||x.id)+'">Read story →</a></div></article>';
 }
 function renderPosts(items){
   const html=items.length?items.map(storyCard).join(""):'<div class="empty">No published stories yet. Your editorial desk can publish the first story.</div>';
